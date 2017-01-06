@@ -12,7 +12,7 @@
 [![Downloads this Month](https://img.shields.io/packagist/dm/contributte/forms.svg?style=flat-square)](https://packagist.org/packages/contributte/forms)
 [![Downloads total](https://img.shields.io/packagist/dt/contributte/forms.svg?style=flat-square)](https://packagist.org/packages/contributte/forms)
 [![Latest stable](https://img.shields.io/packagist/v/contributte/forms.svg?style=flat-square)](https://packagist.org/packages/contributte/forms)
-[![Latest unstable](https://img.shields.io/packagist/vpre/contributte/forms.svg?style=flat-square)](https://packagist.org/packages/contributte/forms))
+[![Latest unstable](https://img.shields.io/packagist/vpre/contributte/forms.svg?style=flat-square)](https://packagist.org/packages/contributte/forms)
 
 ## Discussion / Help
 
