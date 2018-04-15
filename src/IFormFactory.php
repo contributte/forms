@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Contributte\Forms;
 
@@ -8,9 +8,6 @@ namespace Contributte\Forms;
 interface IFormFactory
 {
 
-	/**
-	 * @return Form
-	 */
-	public function create();
+	public function create(): Form;
 
 }

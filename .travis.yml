@@ -1,9 +1,8 @@
 language: php
 
 php:
-  - 5.6
-  - 7.0
   - 7.1
+  - 7.2
   - hhvm
 
 matrix:
@@ -13,17 +12,13 @@ matrix:
       - php: hhvm
 
   include:
-    - php: 5.6
-      env: COMPOSER_FLAG=--prefer-lowest
-    - php: 5.6
-      env: COMPOSER_FLAG=--prefer-stable
-    - php: 7.0
-      env: COMPOSER_FLAG=--prefer-lowest
-    - php: 7.0
-      env: COMPOSER_FLAG=--prefer-stable
     - php: 7.1
       env: COMPOSER_FLAG=--prefer-lowest
     - php: 7.1
+      env: COMPOSER_FLAG=--prefer-stable
+    - php: 7.2
+      env: COMPOSER_FLAG=--prefer-lowest
+    - php: 7.2
       env: COMPOSER_FLAG=--prefer-stable
 
 before_script:
