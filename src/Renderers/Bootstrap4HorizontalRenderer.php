@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Contributte\Forms;
+namespace Contributte\Forms\Renderers;
 
 use Nette\Forms\Controls;
 use Nette\Forms\Form;
