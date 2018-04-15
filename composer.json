@@ -1,7 +1,7 @@
 {
   "name": "contributte/forms",
   "description": "Extra contrib to nette/forms",
-  "keywords": ["nette", "forms", "inputs", "checkbox", "rules", "validation"],
+  "keywords": ["nette", "forms", "inputs", "checkbox", "rules", "validation", "renderers"],
   "type": "library",
   "license": "MIT",
   "homepage": "https://github.com/contributte/forms",
