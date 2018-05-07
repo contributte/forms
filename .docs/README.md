@@ -29,10 +29,7 @@ final class UserPresenter extends BasePresenter
     /** @var IFormFactory @inject */
     public $factory;
     
-    /**
-     * @return Form
-     */
-    protected function createComponentUserForm()
+    protected function createComponentUserForm(): Form
     {
         $form = $this->factory->create();
         
@@ -57,18 +54,12 @@ final class UserFormFactory
     /** @var IFormFactory */
     private $factory;
     
-    /**
-     * @param IFormFactory $factory
-     */
     public function __construct(IFormFactory $factory)
     {
         $this->factory = $factory;
     }
 
-    /**
-     * @return Form
-     */
-    public function create()
+    public function create(): Form
     {
         $form = $this->factory->create();
         

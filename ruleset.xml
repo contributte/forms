@@ -12,18 +12,6 @@
         </properties>
     </rule>
 
-    <rule ref="Generic.WhiteSpace.ScopeIndent">
-        <properties>
-            <property name="indent" value="4"/>
-            <property name="tabIndent" value="true"/>
-        </properties>
-    </rule>
-    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
-
-    <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition">
-        <exclude name="SlevomatCodingStandard.ControlStructures.AssignmentInCondition.assignmentInCondition"/>
-    </rule>
-
     <!-- Exclude folders -->
     <exclude-pattern>/tests/tmp</exclude-pattern>
 </ruleset>

@@ -1,10 +1,7 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Contributte\Forms;
 
-/**
- * @author Milan Felix Sulc <sulcmil@gmail.com>
- */
 class FormFactory implements IFormFactory
 {
 

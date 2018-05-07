@@ -1,17 +1,16 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Contributte\Forms\Renderers;
 
 use Nette\Forms\Controls;
 use Nette\Forms\Form;
 use Nette\Forms\Rendering\DefaultFormRenderer;
+use function mb_strpos;
 
-/**
- * @author Marek Bartoš <bartos.developer152@gmail.com>
- */
 class Bootstrap3InlineRenderer extends DefaultFormRenderer
 {
 
+	/** @var mixed[] */
 	public $wrappers = [
 		'form' => [
 			'container' => '',
@@ -64,8 +63,7 @@ class Bootstrap3InlineRenderer extends DefaultFormRenderer
 	 * Provides complete form rendering.
 	 *
 	 * @param string|null $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
-	 *
-	 * @return string
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function render(Form $form, $mode = null): string
 	{
@@ -77,10 +75,9 @@ class Bootstrap3InlineRenderer extends DefaultFormRenderer
 
 			switch (true) {
 				case $control instanceof Controls\Button:
-
 					/* @var $class string|null */
 					$class = $control->getControlPrototype()->getAttribute('class');
-					if ($class === null || \mb_strpos($class, 'btn') === false) {
+					if ($class === null || mb_strpos($class, 'btn') === false) {
 						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-default');
 						$usedPrimary = true;
 					}
@@ -89,14 +86,12 @@ class Bootstrap3InlineRenderer extends DefaultFormRenderer
 				case $control instanceof Controls\TextBase:
 				case $control instanceof Controls\SelectBox:
 				case $control instanceof Controls\MultiSelectBox:
-
 					$control->getControlPrototype()->addClass('form-control');
 					break;
 
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
-
 					$control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
 					break;
 			}
