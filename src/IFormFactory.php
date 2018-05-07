@@ -1,16 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\Forms;
 
-/**
- * @author Milan Felix Sulc <sulcmil@gmail.com>
- */
 interface IFormFactory
 {
 
-	/**
-	 * @return Form
-	 */
-	public function create();
+	public function create(): Form;
 
 }
