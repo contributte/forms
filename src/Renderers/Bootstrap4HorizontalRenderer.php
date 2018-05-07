@@ -7,7 +7,6 @@ use Nette\Forms\Form;
 use Nette\Forms\IControl;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 use Nette\Utils\Html;
-use function mb_strpos;
 
 class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
 {

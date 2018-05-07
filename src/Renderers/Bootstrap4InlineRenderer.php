@@ -5,7 +5,6 @@ namespace Contributte\Forms\Renderers;
 use Nette\Forms\Controls;
 use Nette\Forms\Form;
 use Nette\Forms\Rendering\DefaultFormRenderer;
-use function mb_strpos;
 
 class Bootstrap4InlineRenderer extends DefaultFormRenderer
 {
