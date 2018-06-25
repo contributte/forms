@@ -5,7 +5,6 @@
  */
 
 use Contributte\Forms\DI\FormFactoryExtension;
-use Contributte\Forms\FormFactory;
 use Contributte\Forms\IFormFactory;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
@@ -24,6 +23,6 @@ test(function (): void {
 	/** @var Container $container */
 	$container = new $class();
 
-	Assert::type(FormFactory::class, $container->getByType(IFormFactory::class));
+	Assert::type(IFormFactory::class, $container->getByType(IFormFactory::class));
 	Assert::type(Form::class, $container->getByType(IFormFactory::class)->create());
 });
