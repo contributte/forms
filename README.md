@@ -31,7 +31,7 @@ composer require contributte/forms
 
 ## Overview
 
-- [FormFactory (FormFactoryExtension)](https://github.com/contributte/forms/blob/master/.docs/README.md#form-factory)
+- [Nette\Forms\Form factory (StandaloneFormFactoryExtension)](https://github.com/contributte/forms/blob/master/.docs/README.md#standalone-form-factory)
 
 ## Maintainers
 

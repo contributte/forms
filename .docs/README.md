@@ -2,20 +2,20 @@
 
 ## Content
 
-- [FormFactoryExtension - provides simple FormFactory](#form-factory)
+- [StandaloneFormFactoryExtension - provides Nette\Forms\Form factory](#standalone-form-factory)
 
-## Form Factory
+## Standalone Form Factory
 
 ```yaml
 extensions:
-    forms: Contributte\Forms\DI\FormFactoryExtension
+    forms.standalone: Contributte\Forms\DI\StandaloneFormFactoryExtension
 ```
 
 You can override it by your implementation.
 
 ```yaml
 services:
-    forms.factory: My\FormFactory
+    forms.standalone.factory: My\FormFactory
 ```
 
 Straightforward is to **inject** factory to presenter.
@@ -23,18 +23,21 @@ Straightforward is to **inject** factory to presenter.
 ```php
 namespace App\Presenters;
 
+use Contributte\Forms\IStandaloneFormFactory;
+use Nette\Forms\Form;
+
 final class UserPresenter extends BasePresenter
 {
 
-    /** @var IFormFactory @inject */
+    /** @var IStandaloneFormFactory @inject */
     public $factory;
-    
+
     protected function createComponentUserForm(): Form
     {
         $form = $this->factory->create();
-        
+
         // Add inputs here!
-    
+
         return $form;
     }
 
@@ -46,15 +49,16 @@ Even better is to use factory in your custom form factory.
 ```php
 namespace App\Forms;
 
-use Contributte\Forms\IFormFactory;
+use Contributte\Forms\IStandaloneFormFactory;
+use Nette\Forms\Form;
 
 final class UserFormFactory
 {
 
-    /** @var IFormFactory */
+    /** @var IStandaloneFormFactory */
     private $factory;
-    
-    public function __construct(IFormFactory $factory)
+
+    public function __construct(IStandaloneFormFactory $factory)
     {
         $this->factory = $factory;
     }
@@ -62,9 +66,9 @@ final class UserFormFactory
     public function create(): Form
     {
         $form = $this->factory->create();
-        
+
         // Add inputs here!
-    
+
         return $form;
     }
 
