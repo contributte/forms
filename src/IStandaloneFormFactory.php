@@ -4,7 +4,7 @@ namespace Contributte\Forms;
 
 use Nette\Forms\Form;
 
-interface IFormFactory
+interface IStandaloneFormFactory
 {
 
 	public function create(): Form;

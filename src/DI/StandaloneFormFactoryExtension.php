@@ -2,11 +2,10 @@
 
 namespace Contributte\Forms\DI;
 
-use Contributte\Forms\FormFactory;
-use Contributte\Forms\IFormFactory;
+use Contributte\Forms\IStandaloneFormFactory;
 use Nette\DI\CompilerExtension;
 
-class FormFactoryExtension extends CompilerExtension
+class StandaloneFormFactoryExtension extends CompilerExtension
 {
 
 	/**
@@ -17,7 +16,7 @@ class FormFactoryExtension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('factory'))
-			->setImplement(IFormFactory::class);
+			->setImplement(IStandaloneFormFactory::class);
 	}
 
 }
