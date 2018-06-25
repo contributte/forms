@@ -26,7 +26,8 @@ composer require contributte/forms
 
 | State       | Version | Branch   | PHP      |
 |-------------|---------|----------|----------|
-| stable      | `^0.2`  | `master` | `>= 7.1` |
+| dev         | `^0.4`  | `master` | `>= 7.1` |
+| stable      | `^0.3`  | `master` | `>= 7.1` |
 | stable      | `^0.1`  | `master` | `>= 5.6` |
 
 ## Overview
