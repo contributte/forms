@@ -5,12 +5,12 @@
  */
 
 use Contributte\Forms\DI\FormFactoryExtension;
-use Contributte\Forms\Form;
 use Contributte\Forms\FormFactory;
 use Contributte\Forms\IFormFactory;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;
+use Nette\Forms\Form;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../bootstrap.php';

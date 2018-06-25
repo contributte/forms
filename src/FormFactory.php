@@ -2,6 +2,8 @@
 
 namespace Contributte\Forms;
 
+use Nette\Forms\Form;
+
 class FormFactory implements IFormFactory
 {
 
