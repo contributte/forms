@@ -1,18 +1,20 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Renderers;
+namespace Contributte\Forms\Rendering;
 
 use Nette\Forms\Controls;
 use Nette\Forms\Form;
+use Nette\Forms\IControl;
 use Nette\Forms\Rendering\DefaultFormRenderer;
+use Nette\Utils\Html;
 
-class Bootstrap3InlineRenderer extends DefaultFormRenderer
+class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
 {
 
 	/** @var mixed[] */
 	public $wrappers = [
 		'form' => [
-			'container' => '',
+			'container' => null,
 		],
 		'error' => [
 			'container' => 'div class="alert alert-danger"',
@@ -24,21 +26,20 @@ class Bootstrap3InlineRenderer extends DefaultFormRenderer
 			'description' => 'p',
 		],
 		'controls' => [
-			'container' => '',
+			'container' => 'div',
 		],
 		'pair' => [
-			'container' => 'div class=form-group',
+			'container' => 'div class="form-group row"',
 			'.required' => 'required',
 			'.optional' => null,
 			'.odd' => null,
-			'.error' => 'has-error',
 		],
 		'control' => [
-			'container' => null,
+			'container' => 'div class="col col-sm-9"',
 			'.odd' => null,
-			'description' => 'span class=help-block',
+			'description' => 'span class="form-text"',
 			'requiredsuffix' => '',
-			'errorcontainer' => 'span class=help-block',
+			'errorcontainer' => 'span class="form-text"',
 			'erroritem' => '',
 			'.required' => 'required',
 			'.text' => 'text',
@@ -68,16 +69,23 @@ class Bootstrap3InlineRenderer extends DefaultFormRenderer
 	{
 		$usedPrimary = false;
 
-		$form->getElementPrototype()->addClass('form-inline');
+		$form->getElementPrototype()->setNovalidate(true);
 
 		foreach ($form->getControls() as $control) {
+
+			if ($control instanceof Controls\BaseControl
+				&& !($control instanceof Controls\Checkbox)
+				&& !($control instanceof Controls\CheckboxList)
+				&& !($control instanceof Controls\RadioList)) {
+				$control->getLabelPrototype()->addClass('col-form-label col col-sm-3');
+			}
 
 			switch (true) {
 				case $control instanceof Controls\Button:
 					/** @var string|null $class */
 					$class = $control->getControlPrototype()->getAttribute('class');
 					if ($class === null || mb_strpos($class, 'btn') === false) {
-						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-default');
+						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-secondary');
 						$usedPrimary = true;
 					}
 					break;
@@ -91,12 +99,23 @@ class Bootstrap3InlineRenderer extends DefaultFormRenderer
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
-					$control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
+					$control->getSeparatorPrototype()->setName('div')->addClass('form-check');
+					$control->getControlPrototype()->addClass('form-check-input');
+					$control->getLabelPrototype()->addClass('form-check-label');
 					break;
 			}
 		}
 
 		return parent::render($form, $mode);
+	}
+
+	public function renderLabel(IControl $control): Html
+	{
+		$label = parent::renderLabel($control);
+		if ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
+			$label->addHtml('<div class="col col-sm-3"></div>');
+		}
+		return $label;
 	}
 
 }

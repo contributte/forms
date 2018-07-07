@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Renderers;
+namespace Contributte\Forms\Rendering;
 
 use Nette\Forms\Controls;
 use Nette\Forms\Form;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 
-class Bootstrap4VerticalRenderer extends DefaultFormRenderer
+class Bootstrap3HorizontalRenderer extends DefaultFormRenderer
 {
 
 	/** @var mixed[] */
@@ -24,20 +24,21 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 			'description' => 'p',
 		],
 		'controls' => [
-			'container' => null,
+			'container' => 'div',
 		],
 		'pair' => [
-			'container' => 'div class="form-group"',
+			'container' => 'div class=form-group',
 			'.required' => 'required',
 			'.optional' => null,
 			'.odd' => null,
+			'.error' => 'has-error',
 		],
 		'control' => [
-			'container' => '',
+			'container' => 'div class=col-sm-9',
 			'.odd' => null,
-			'description' => 'span class="form-text"',
+			'description' => 'span class=help-block',
 			'requiredsuffix' => '',
-			'errorcontainer' => 'span class="form-text"',
+			'errorcontainer' => 'span class=help-block',
 			'erroritem' => '',
 			'.required' => 'required',
 			'.text' => 'text',
@@ -48,7 +49,7 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 			'.button' => 'button',
 		],
 		'label' => [
-			'container' => '',
+			'container' => 'div class="col-sm-3 control-label"',
 			'suffix' => null,
 			'requiredsuffix' => '',
 		],
@@ -69,18 +70,16 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 
 		$form->getElementPrototype()->setNovalidate(true);
 
-		foreach ($form->getControls() as $control) {
+		$form->getElementPrototype()->addClass('form-horizontal');
 
-			if ($control instanceof Controls\BaseControl) {
-				$control->getLabelPrototype()->addClass('col-form-label');
-			}
+		foreach ($form->getControls() as $control) {
 
 			switch (true) {
 				case $control instanceof Controls\Button:
 					/** @var string|null $class */
 					$class = $control->getControlPrototype()->getAttribute('class');
 					if ($class === null || mb_strpos($class, 'btn') === false) {
-						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-secondary');
+						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-default');
 						$usedPrimary = true;
 					}
 					break;
@@ -94,9 +93,7 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
-					$control->getSeparatorPrototype()->setName('div')->addClass('form-check');
-					$control->getControlPrototype()->addClass('form-check-input');
-					$control->getLabelPrototype()->addClass('form-check-label');
+					$control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
 					break;
 			}
 		}
