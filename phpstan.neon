@@ -2,3 +2,7 @@ includes:
 	- temp/phpstan/vendor/phpstan/phpstan-strict-rules/rules.neon
 	- temp/phpstan/vendor/phpstan/phpstan-nette/extension.neon
 	- temp/phpstan/vendor/phpstan/phpstan-nette/rules.neon
+
+parameters:
+	ignoreErrors:
+		- "#Method Contributte\\\\Forms\\\\Controls\\\\ProtectionFastInput::setValue\\(\\) has parameter \\$value with no typehint specified\\.#"

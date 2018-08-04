@@ -2,7 +2,9 @@
 
 namespace Contributte\Forms\Controls;
 
+use DateTime;
 use Nette\Forms\Controls\HiddenField;
+use Nette\Forms\Form;
 use Nette\Utils\Html;
 
 class ProtectionFastInput extends HiddenField
@@ -11,7 +13,7 @@ class ProtectionFastInput extends HiddenField
 	/** @var string */
 	private $diff;
 
-	public function __construct(string $diff = '+5 second', string $message = 'Form was submitted to fast. Are you robot?')
+	public function __construct(string $diff = '+5 seconds', string $message = 'Form was submitted too fast. Are you robot?')
 	{
 		parent::__construct();
 
