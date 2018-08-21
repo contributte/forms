@@ -7,7 +7,7 @@
 
 ## Application Form Factory
 
-ApplicationFormFactory returns instance of Nette\Application\UI\Form. It should be used instead of StandaloneFormFactory if [nette/application](https://github.com/nette/application) is installed.
+ApplicationFormFactory returns instance of `Nette\Application\UI\Form`. It should be used in place of StandaloneFormFactory if [nette/application](https://github.com/nette/application) is installed.
 
 ```yaml
 extensions:
@@ -21,7 +21,7 @@ services:
     forms.application.factory: My\FormFactory
 ```
 
-Straightforward is to **inject** factory to presenter.
+Straightforward way is to **inject** the factory in a presenter.
 
 ```php
 namespace App\Presenters;
@@ -47,7 +47,7 @@ final class UserPresenter extends BasePresenter
 }
 ```
 
-Even better is to use factory in your custom form factory.
+Even better is to use the factory in your custom form factory.
 
 ```php
 namespace App\Forms;
@@ -80,7 +80,7 @@ final class UserFormFactory
 
 ## Standalone Form Factory
 
-StandaloneFormFactory returns instance of Nette\Forms\Form. It should be used only if [nette/application](https://github.com/nette/application) is not installed.
+StandaloneFormFactory returns instance of `Nette\Forms\Form`. It should be used only if [nette/application](https://github.com/nette/application) is not installed.
 
 ```yaml
 extensions:
@@ -94,7 +94,7 @@ services:
     forms.standalone.factory: My\FormFactory
 ```
 
-Straightforward is to **inject** factory to presenter.
+Straightforward way is to **inject** factory in a presenter.
 
 ```php
 namespace App\Presenters;
@@ -120,7 +120,7 @@ final class UserPresenter extends BasePresenter
 }
 ```
 
-Even better is to use factory in your custom form factory.
+Even better is to use the factory in your custom form factory.
 
 ```php
 namespace App\Forms;
