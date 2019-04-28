@@ -15,8 +15,9 @@ class StandaloneFormFactoryExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('factory'))
-			->setImplement(IStandaloneFormFactory::class);
+		$builder->addFactoryDefinition($this->prefix('factory'))
+			->setImplement(IStandaloneFormFactory::class)
+			->getResultDefinition();
 	}
 
 }

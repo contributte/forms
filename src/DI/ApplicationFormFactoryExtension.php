@@ -21,8 +21,9 @@ class ApplicationFormFactoryExtension extends CompilerExtension
 
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('factory'))
-			->setImplement(IApplicationFormFactory::class);
+		$builder->addFactoryDefinition($this->prefix('factory'))
+			->setImplement(IApplicationFormFactory::class)
+			->getResultDefinition();
 	}
 
 }
