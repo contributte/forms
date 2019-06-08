@@ -10,9 +10,6 @@ use Nette\DI\CompilerExtension;
 class ApplicationFormFactoryExtension extends CompilerExtension
 {
 
-	/**
-	 * Register services
-	 */
 	public function loadConfiguration(): void
 	{
 		if (!class_exists(Form::class)) {
@@ -21,7 +18,7 @@ class ApplicationFormFactoryExtension extends CompilerExtension
 
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('factory'))
+		$builder->addFactoryDefinition($this->prefix('factory'))
 			->setImplement(IApplicationFormFactory::class);
 	}
 

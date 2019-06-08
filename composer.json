@@ -24,13 +24,12 @@
     }
   ],
   "require": {
-    "php": ">= 7.1",
-    "nette/forms": "~2.4.8"
+    "php": "^7.2",
+    "nette/forms": "~3.0.0"
   },
   "require-dev": {
-    "nette/application": "~2.4.13",
-    "nette/di": "~2.4.13",
-    "nette/utils": "~2.5.2",
+    "nette/application": "~3.0.0",
+    "nette/di": "~3.0.0",
     "ninjify/nunjuck": "^0.2",
     "ninjify/qa": "^0.8.0",
     "phpstan/extension-installer": "^1.0",
@@ -43,9 +42,7 @@
     "nette/di": "to use FormFactoryExtension[CompilerExtension]"
   },
   "conflict": {
-    "nette/application": "<2.4.12",
-    "nette/utils": "<2.5.0",
-    "nette/http": "<2.4.9"
+    "nette/di": "<3.0.0"
   },
   "autoload": {
     "psr-4": {
@@ -59,7 +56,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.4.x-dev"
+      "dev-master": "0.5.x-dev"
     }
   }
 }

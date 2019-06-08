@@ -1,5 +1,4 @@
 parameters:
 	ignoreErrors:
 		# It is contravariant, original typehint is not recognized properly
-		- '#^Parameter \#2 \$mode \(string\|null\) of method .+ should be contravariant with parameter \$mode \(mixed\) of method Nette\\Forms\\Rendering\\DefaultFormRenderer\:\:render\(\)$#'
 		- '#^Parameter \#1 \$value \(string\) of method Contributte\\Forms\\Controls\\ProtectionFastInput\:\:setValue\(\) should be contravariant with parameter \$value \(mixed\) of method Nette\\Forms\\.+\:\:setValue\(\)$#'
