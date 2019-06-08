@@ -1,9 +1,16 @@
-# Forms
+# Contributte Forms
 
 ## Content
 
+- [Setup](#setup)
 - [ApplicationFormFactoryExtension - provides Nette\Application\UI\Form factory](#application-form-factory)
 - [StandaloneFormFactoryExtension - provides Nette\Forms\Form factory](#standalone-form-factory)
+
+## Setup
+
+```bash
+composer require contributte/forms
+```
 
 ## Application Form Factory
 

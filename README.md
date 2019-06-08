@@ -1,8 +1,6 @@
-# Contributte > Forms
+# Contributte Forms
 
-:sparkles: Extra contribution to [`nette/forms`](https://github.com/nette/forms).
-
------
+Extra contribution to [`nette/forms`](https://github.com/nette/forms).
 
 [![Build Status](https://img.shields.io/travis/contributte/forms.svg?style=flat-square)](https://travis-ci.org/contributte/forms)
 [![Code coverage](https://img.shields.io/coveralls/contributte/forms.svg?style=flat-square)](https://coveralls.io/r/contributte/forms)
@@ -10,17 +8,17 @@
 [![Downloads this Month](https://img.shields.io/packagist/dm/contributte/forms.svg?style=flat-square)](https://packagist.org/packages/contributte/forms)
 [![Downloads total](https://img.shields.io/packagist/dt/contributte/forms.svg?style=flat-square)](https://packagist.org/packages/contributte/forms)
 [![Latest stable](https://img.shields.io/packagist/v/contributte/forms.svg?style=flat-square)](https://packagist.org/packages/contributte/forms)
-[![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
+[![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
 
 ## Discussion / Help
 
 [![Join the chat](https://img.shields.io/gitter/room/contributte/contributte.svg?style=flat-square)](http://bit.ly/ctteg)
 
-## Install
+## Documentation
 
-```
-composer require contributte/forms
-```
+- [Setup](.docs/README.md#setup)
+- [ApplicationFormFactoryExtension - provides Nette\Application\UI\Form factory](.docs/README.md#application-form-factory)
+- [StandaloneFormFactoryExtension - provides Nette\Forms\Form factory](.docs/README.md#standalone-form-factory)
 
 ## Versions
 
@@ -29,11 +27,6 @@ composer require contributte/forms
 | dev         | `^0.4`  | `master` | `>= 7.1` |
 | stable      | `^0.3`  | `master` | `>= 7.1` |
 | stable      | `^0.1`  | `master` | `>= 5.6` |
-
-## Overview
-
-- [Nette\Application\UI\Form factory (ApplicationFormFactoryExtension)](https://github.com/contributte/forms/blob/master/.docs/README.md#application-form-factory)
-- [Nette\Forms\Form factory (StandaloneFormFactoryExtension)](https://github.com/contributte/forms/blob/master/.docs/README.md#standalone-form-factory)
 
 ## Maintainers
 
@@ -57,7 +50,5 @@ composer require contributte/forms
     </tr>
   </tbody>
 </table>
-
----
 
 Thank you for testing, reporting and contributing.
