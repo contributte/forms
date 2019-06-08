@@ -8,14 +8,11 @@ use Nette\DI\CompilerExtension;
 class StandaloneFormFactoryExtension extends CompilerExtension
 {
 
-	/**
-	 * Register services
-	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('factory'))
+		$builder->addFactoryDefinition($this->prefix('factory'))
 			->setImplement(IStandaloneFormFactory::class);
 	}
 
