@@ -25,7 +25,9 @@ class ProtectionFastInput extends HiddenField
 	}
 
 	/**
-	 * @inheritdoc
+	 * @param string $value
+	 * @return static
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
 	public function setValue($value): self
 	{
