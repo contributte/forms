@@ -72,7 +72,6 @@ class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
 		$form->getElementPrototype()->setNovalidate(true);
 
 		foreach ($form->getControls() as $control) {
-
 			if ($control instanceof Controls\BaseControl
 				&& !($control instanceof Controls\Checkbox)
 				&& !($control instanceof Controls\CheckboxList)
@@ -88,14 +87,13 @@ class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
 						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-secondary');
 						$usedPrimary = true;
 					}
-					break;
 
+					break;
 				case $control instanceof Controls\TextBase:
 				case $control instanceof Controls\SelectBox:
 				case $control instanceof Controls\MultiSelectBox:
 					$control->getControlPrototype()->addClass('form-control');
 					break;
-
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
@@ -115,6 +113,7 @@ class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
 		if ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
 			$label->addHtml('<div class="col col-sm-3"></div>');
 		}
+
 		return $label;
 	}
 

@@ -73,7 +73,6 @@ class Bootstrap3HorizontalRenderer extends DefaultFormRenderer
 		$form->getElementPrototype()->addClass('form-horizontal');
 
 		foreach ($form->getControls() as $control) {
-
 			switch (true) {
 				case $control instanceof Controls\Button:
 					/** @var string|null $class */
@@ -82,14 +81,13 @@ class Bootstrap3HorizontalRenderer extends DefaultFormRenderer
 						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-default');
 						$usedPrimary = true;
 					}
-					break;
 
+					break;
 				case $control instanceof Controls\TextBase:
 				case $control instanceof Controls\SelectBox:
 				case $control instanceof Controls\MultiSelectBox:
 					$control->getControlPrototype()->addClass('form-control');
 					break;
-
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
