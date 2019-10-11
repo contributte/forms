@@ -70,7 +70,6 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 		$form->getElementPrototype()->setNovalidate(true);
 
 		foreach ($form->getControls() as $control) {
-
 			if ($control instanceof Controls\BaseControl) {
 				$control->getLabelPrototype()->addClass('col-form-label');
 			}
@@ -83,14 +82,13 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-secondary');
 						$usedPrimary = true;
 					}
-					break;
 
+					break;
 				case $control instanceof Controls\TextBase:
 				case $control instanceof Controls\SelectBox:
 				case $control instanceof Controls\MultiSelectBox:
 					$control->getControlPrototype()->addClass('form-control');
 					break;
-
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
