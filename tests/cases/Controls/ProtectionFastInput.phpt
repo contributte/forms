@@ -13,7 +13,7 @@ require_once __DIR__ . '/../../bootstrap.php';
 // OK
 test(function (): void {
 	$_SERVER['REQUEST_METHOD'] = 'POST';
-	$_POST = ['btn' => '', 'fast' => time() - 10];
+	$_POST = ['btn' => '', 'fast' => (string) (time() - 10)];
 
 	$form = new Form();
 	$form->addSubmit('btn');
@@ -27,7 +27,7 @@ test(function (): void {
 // Form was send too fast
 test(function (): void {
 	$_SERVER['REQUEST_METHOD'] = 'POST';
-	$_POST = ['btn' => '', 'fast' => time() - 3];
+	$_POST = ['btn' => '', 'fast' => (string) (time() - 3)];
 
 	$form = new Form();
 	$form->addSubmit('btn');
@@ -41,7 +41,7 @@ test(function (): void {
 // From send too fast own message
 test(function (): void {
 	$_SERVER['REQUEST_METHOD'] = 'POST';
-	$_POST = ['btn' => '', 'fast' => time() - 3];
+	$_POST = ['btn' => '', 'fast' => (string) (time() - 3)];
 
 	$form = new Form();
 	$form->addSubmit('btn');
