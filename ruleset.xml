@@ -6,9 +6,9 @@
     <!-- My rules -->
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
         <properties>
-            <property name="rootNamespaces" type="array" value="
-                src=>Contributte\Forms
-            "/>
+			<property name="rootNamespaces" type="array">
+				<element key="src" value="Contributte\Forms"/>
+			</property>
         </properties>
     </rule>
 
