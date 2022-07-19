@@ -7,8 +7,13 @@
 use Contributte\Forms\Controls\ProtectionFastInput;
 use Nette\Forms\Form;
 use Tester\Assert;
+use Tester\Environment;
 
 require_once __DIR__ . '/../../bootstrap.php';
+
+if (!method_exists(Form::class, 'initialize')) {
+	Environment::skip('This test requires nette/forms >= 3.1');
+}
 
 // OK
 test(function (): void {
@@ -16,9 +21,12 @@ test(function (): void {
 	$_POST = ['btn' => '', 'fast' => (string) (time() - 10)];
 
 	$form = new Form();
-	$form->addSubmit('btn');
+	$form->allowCrossOrigin();
+	$form->addSubmit('btn')->onClick[] = function () {
+	};
 
 	$form['fast'] = $input = new ProtectionFastInput('+5 seconds');
+	Form::initialize(true);
 	$form->fireEvents();
 
 	Assert::equal([], $form->getErrors());
@@ -30,9 +38,12 @@ test(function (): void {
 	$_POST = ['btn' => '', 'fast' => (string) (time() - 3)];
 
 	$form = new Form();
-	$form->addSubmit('btn');
+	$form->allowCrossOrigin();
+	$form->addSubmit('btn')->onClick[] = function () {
+	};
 
 	$form['fast'] = $input = new ProtectionFastInput('+5 seconds');
+	Form::initialize(true);
 	$form->fireEvents();
 
 	Assert::equal(['Form was submitted too fast. Are you robot?'], $form->getErrors());
@@ -44,9 +55,12 @@ test(function (): void {
 	$_POST = ['btn' => '', 'fast' => (string) (time() - 3)];
 
 	$form = new Form();
-	$form->addSubmit('btn');
+	$form->allowCrossOrigin();
+	$form->addSubmit('btn')->onClick[] = function () {
+	};
 
 	$form['fast'] = $input = new ProtectionFastInput('+5 seconds', 'Bot? Bot?');
+	Form::initialize(true);
 	$form->fireEvents();
 
 	Assert::equal(['Bot? Bot?'], $form->getErrors());
