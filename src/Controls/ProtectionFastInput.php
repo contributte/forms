@@ -46,7 +46,8 @@ class ProtectionFastInput extends HiddenField
 
 	public function validateInput(ProtectionFastInput $control): bool
 	{
-		$value = (string) $control->getValue();
+		/** @var string|null $value */
+		$value = $control->getValue();
 
 		$d1 = new DateTime('@' . $value);
 		$d1->modify($this->diff);
