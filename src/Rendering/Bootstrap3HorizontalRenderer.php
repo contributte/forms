@@ -4,9 +4,8 @@ namespace Contributte\Forms\Rendering;
 
 use Nette\Forms\Controls;
 use Nette\Forms\Form;
-use Nette\Forms\Rendering\DefaultFormRenderer;
 
-class Bootstrap3HorizontalRenderer extends DefaultFormRenderer
+class Bootstrap3HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 {
 
 	/** @var mixed[] */
@@ -34,7 +33,7 @@ class Bootstrap3HorizontalRenderer extends DefaultFormRenderer
 			'.error' => 'has-error',
 		],
 		'control' => [
-			'container' => 'div class=col-sm-9',
+			'container' => 'div class=col-sm-%colsControl%',
 			'.odd' => null,
 			'description' => 'span class=help-block',
 			'requiredsuffix' => '',
@@ -49,7 +48,7 @@ class Bootstrap3HorizontalRenderer extends DefaultFormRenderer
 			'.button' => 'button',
 		],
 		'label' => [
-			'container' => 'div class="col-sm-3 control-label"',
+			'container' => 'div class="col-sm-%colsLabel% control-label"',
 			'suffix' => null,
 			'requiredsuffix' => '',
 		],
@@ -75,9 +74,7 @@ class Bootstrap3HorizontalRenderer extends DefaultFormRenderer
 		foreach ($form->getControls() as $control) {
 			switch (true) {
 				case $control instanceof Controls\Button:
-					/** @var string|null $class */
-					$class = $control->getControlPrototype()->getAttribute('class');
-					if ($class === null || mb_strpos($class, 'btn') === false) {
+					if (!Helpers::htmlClassContains($control->getControlPrototype(), 'btn')) {
 						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-default');
 						$usedPrimary = true;
 					}

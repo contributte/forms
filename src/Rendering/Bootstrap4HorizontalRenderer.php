@@ -5,10 +5,9 @@ namespace Contributte\Forms\Rendering;
 use Nette\Forms\Controls;
 use Nette\Forms\Form;
 use Nette\Forms\IControl;
-use Nette\Forms\Rendering\DefaultFormRenderer;
 use Nette\Utils\Html;
 
-class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
+class Bootstrap4HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 {
 
 	/** @var mixed[] */
@@ -35,7 +34,7 @@ class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
 			'.odd' => null,
 		],
 		'control' => [
-			'container' => 'div class="col col-sm-9"',
+			'container' => 'div class="col col-sm-%colsControl%"',
 			'.odd' => null,
 			'description' => 'span class="form-text"',
 			'requiredsuffix' => '',
@@ -76,14 +75,12 @@ class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
 				&& !($control instanceof Controls\Checkbox)
 				&& !($control instanceof Controls\CheckboxList)
 				&& !($control instanceof Controls\RadioList)) {
-				$control->getLabelPrototype()->addClass('col-form-label col col-sm-3');
+				$control->getLabelPrototype()->addClass($this->replacePlaceholders('col-form-label col col-sm-%colsLabel%'));
 			}
 
 			switch (true) {
 				case $control instanceof Controls\Button:
-					/** @var string|null $class */
-					$class = $control->getControlPrototype()->getAttribute('class');
-					if ($class === null || mb_strpos($class, 'btn') === false) {
+					if (!Helpers::htmlClassContains($control->getControlPrototype(), 'btn')) {
 						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-secondary');
 						$usedPrimary = true;
 					}
@@ -111,7 +108,7 @@ class Bootstrap4HorizontalRenderer extends DefaultFormRenderer
 	{
 		$label = parent::renderLabel($control);
 		if ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
-			$label->addHtml('<div class="col col-sm-3"></div>');
+			$label->addHtml($this->replacePlaceholders('<div class="col col-sm-%colsLabel%"></div>'));
 		}
 
 		return $label;

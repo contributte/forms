@@ -76,9 +76,7 @@ class Bootstrap4InlineRenderer extends DefaultFormRenderer
 
 			switch (true) {
 				case $control instanceof Controls\Button:
-					/** @var string|null $class */
-					$class = $control->getControlPrototype()->getAttribute('class');
-					if ($class === null || mb_strpos($class, 'btn') === false) {
+					if (!Helpers::htmlClassContains($control->getControlPrototype(), 'btn')) {
 						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-secondary');
 						$usedPrimary = true;
 					}
