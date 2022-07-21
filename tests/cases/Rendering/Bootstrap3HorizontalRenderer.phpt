@@ -32,3 +32,11 @@ test(function (): void {
 	$renderer->setColumns(2, 10);
 	Assert::matchFile(__DIR__ . '/expected/bootstrap3horizontal.cols.html', $renderer->render($form));
 });
+
+test(function (): void {
+	$form = new Form();
+	$form->addSubmit('button1', 'Button 1')->setHtmlAttribute('class', 'my-button');
+	$form->addSubmit('button2', 'Button 2')->setHtmlAttribute('class', 'btn btn-danger');
+	$renderer = new Bootstrap3HorizontalRenderer();
+	Assert::matchFile(__DIR__ . '/expected/bootstrap3horizontal.buttons.html', $renderer->render($form));
+});
