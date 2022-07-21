@@ -65,18 +65,17 @@ class Bootstrap3HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 	 */
 	public function render(Form $form, $mode = null): string
 	{
-		$usedPrimary = false;
-
 		$form->getElementPrototype()->setNovalidate(true);
 
 		$form->getElementPrototype()->addClass('form-horizontal');
+
+		$onlyButton = Helpers::onlyOneButton($form);
 
 		foreach ($form->getControls() as $control) {
 			switch (true) {
 				case $control instanceof Controls\Button:
 					if (!Helpers::htmlClassContains($control->getControlPrototype(), 'btn')) {
-						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-default');
-						$usedPrimary = true;
+						$control->getControlPrototype()->addClass($onlyButton ? 'btn btn-primary' : 'btn btn-default');
 					}
 
 					break;

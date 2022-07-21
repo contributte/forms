@@ -20,3 +20,11 @@ test(function (): void {
 	$renderer = new Bootstrap4VerticalRenderer();
 	Assert::matchFile(__DIR__ . '/expected/bootstrap4vertical.html', $renderer->render($form));
 });
+
+test(function (): void {
+	$form = new Form();
+	$form->addSubmit('button1', 'Button 1')->setHtmlAttribute('class', 'my-button');
+	$form->addSubmit('button2', 'Button 2')->setHtmlAttribute('class', 'btn btn-danger');
+	$renderer = new Bootstrap4VerticalRenderer();
+	Assert::matchFile(__DIR__ . '/expected/bootstrap4vertical.buttons.html', $renderer->render($form));
+});

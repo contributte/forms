@@ -2,6 +2,8 @@
 
 namespace Contributte\Forms\Rendering;
 
+use Nette\Forms\Controls\Button;
+use Nette\Forms\Form;
 use Nette\Utils\Html;
 
 class Helpers
@@ -16,6 +18,18 @@ class Helpers
 		}
 
 		return $class !== null && mb_strpos($class, $contains) !== false;
+	}
+
+	public static function onlyOneButton(Form $form): bool
+	{
+		$count = 0;
+		foreach ($form->getControls() as $control) {
+			if ($control instanceof Button) {
+				$count++;
+			}
+		}
+
+		return $count === 1;
 	}
 
 }

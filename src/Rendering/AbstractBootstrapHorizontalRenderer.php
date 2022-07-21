@@ -4,7 +4,7 @@ namespace Contributte\Forms\Rendering;
 
 use Nette\Forms\Rendering\DefaultFormRenderer;
 
-class AbstractBootstrapHorizontalRenderer extends DefaultFormRenderer
+abstract class AbstractBootstrapHorizontalRenderer extends DefaultFormRenderer
 {
 
 	/** @var int */

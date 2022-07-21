@@ -65,9 +65,9 @@ class Bootstrap4InlineRenderer extends DefaultFormRenderer
 	 */
 	public function render(Form $form, $mode = null): string
 	{
-		$usedPrimary = false;
-
 		$form->getElementPrototype()->addClass('form-inline');
+
+		$onlyButton = Helpers::onlyOneButton($form);
 
 		foreach ($form->getControls() as $control) {
 			if ($control instanceof Controls\BaseControl) {
@@ -76,9 +76,9 @@ class Bootstrap4InlineRenderer extends DefaultFormRenderer
 
 			switch (true) {
 				case $control instanceof Controls\Button:
+				case $control instanceof Controls\Button:
 					if (!Helpers::htmlClassContains($control->getControlPrototype(), 'btn')) {
-						$control->getControlPrototype()->addClass($usedPrimary === false ? 'btn btn-primary' : 'btn btn-secondary');
-						$usedPrimary = true;
+						$control->getControlPrototype()->addClass($onlyButton ? 'btn btn-primary' : 'btn btn-default');
 					}
 
 					break;
