@@ -8,6 +8,7 @@ use Contributte\Forms\Controls\ProtectionFastInput;
 use Nette\Forms\Form;
 use Tester\Assert;
 use Tester\Environment;
+use Tests\Fixtures\Forms\TestForm;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
@@ -17,51 +18,27 @@ if (!method_exists(Form::class, 'initialize')) {
 
 // OK
 test(function (): void {
-	$_SERVER['REQUEST_METHOD'] = 'POST';
-	$_POST = ['btn' => '', 'fast' => (string) (time() - 10)];
-
-	$form = new Form();
-	$form->allowCrossOrigin();
-	$form->addSubmit('btn')->onClick[] = function () {
-	};
-
-	$form['fast'] = $input = new ProtectionFastInput('+5 seconds');
-	Form::initialize(true);
-	$form->fireEvents();
+	$form = new TestForm(['fast' => (string) (time() - 10)]);
+	$form['fast'] = new ProtectionFastInput('+5 seconds');
+	$form->submit();
 
 	Assert::equal([], $form->getErrors());
 });
 
 // Form was send too fast
 test(function (): void {
-	$_SERVER['REQUEST_METHOD'] = 'POST';
-	$_POST = ['btn' => '', 'fast' => (string) (time() - 3)];
-
-	$form = new Form();
-	$form->allowCrossOrigin();
-	$form->addSubmit('btn')->onClick[] = function () {
-	};
-
-	$form['fast'] = $input = new ProtectionFastInput('+5 seconds');
-	Form::initialize(true);
-	$form->fireEvents();
+	$form = new TestForm(['fast' => (string) (time() - 3)]);
+	$form['fast'] = new ProtectionFastInput('+5 seconds');
+	$form->submit();
 
 	Assert::equal(['Form was submitted too fast. Are you robot?'], $form->getErrors());
 });
 
 // From send too fast own message
 test(function (): void {
-	$_SERVER['REQUEST_METHOD'] = 'POST';
-	$_POST = ['btn' => '', 'fast' => (string) (time() - 3)];
-
-	$form = new Form();
-	$form->allowCrossOrigin();
-	$form->addSubmit('btn')->onClick[] = function () {
-	};
-
-	$form['fast'] = $input = new ProtectionFastInput('+5 seconds', 'Bot? Bot?');
-	Form::initialize(true);
-	$form->fireEvents();
+	$form = new TestForm(['fast' => (string) (time() - 3)]);
+	$form['fast'] = new ProtectionFastInput('+5 seconds', 'Bot? Bot?');
+	$form->submit();
 
 	Assert::equal(['Bot? Bot?'], $form->getErrors());
 });
