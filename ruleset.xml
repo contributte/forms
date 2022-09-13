@@ -8,6 +8,7 @@
         <properties>
 			<property name="rootNamespaces" type="array">
 				<element key="src" value="Contributte\Forms"/>
+				<element key="tests/fixtures" value="Tests\Fixtures"/>
 			</property>
         </properties>
     </rule>

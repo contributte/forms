@@ -44,6 +44,11 @@
       "Contributte\\Forms\\": "src"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\Fixtures\\": "tests/fixtures"
+    }
+  },
   "config": {
     "sort-packages": true,
     "allow-plugins": {
