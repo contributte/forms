@@ -218,6 +218,10 @@ abstract class AbstractDateTimeInput extends BaseControl
 	 */
 	protected function getValueAsDateTimeImmutable()
 	{
+		if ($this->value === null || $this->value === '') {
+			return null;
+		}
+
 		$date = $this->parser->parse($this->value);
 		if ($date === null) {
 			$this->addError($this->invalidValueMessage);
