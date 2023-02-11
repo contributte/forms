@@ -2,7 +2,7 @@
 
 namespace Contributte\Forms\Controls\DateTime;
 
-use DateTimeImmutable;
+use DateTime;
 use DateTimeInterface;
 use DateTimeZone;
 use Nette\SmartObject;
@@ -66,7 +66,7 @@ class DateTimeParser
 	/**
 	 * @param mixed $value
 	 */
-	public function parse($value): ?DateTimeImmutable
+	public function parse($value): ?DateTime
 	{
 		if (!is_string($value) || strlen(trim($value)) === 0) {
 			return null;
@@ -76,7 +76,7 @@ class DateTimeParser
 
 		foreach ($formats as $format) {
 			// ending | added to prevent setting unparsed DateTime fields to current time instead of zero
-			$date = DateTimeImmutable::createFromFormat($format . '|', $value, $this->defaultTimeZone);
+			$date = DateTime::createFromFormat($format . '|', $value, $this->defaultTimeZone);
 			if ($date !== false) {
 				return $date;
 			}

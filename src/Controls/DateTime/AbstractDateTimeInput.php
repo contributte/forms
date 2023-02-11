@@ -121,7 +121,7 @@ abstract class AbstractDateTimeInput extends BaseControl
 	/**
 	 * @return mixed
 	 */
-	protected function transformValue(?DateTimeImmutable $value)
+	protected function transformValue(?DateTime $value)
 	{
 		if ($value === null) {
 			return null;
