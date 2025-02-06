@@ -64,7 +64,7 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
    */
 	public function render(Form $form, $mode = null): string
 	{
-		$form->getElementPrototype()->addClass('d-inline-flex gap-2'); // Bootstrap 5 nahrazení form-inline
+		$form->getElementPrototype()->addClass('d-inline-flex gap-2');
 
 		$onlyButton = Helpers::onlyOneButton($form);
 
@@ -84,7 +84,7 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
 				case $control instanceof Controls\TextBase:
 				case $control instanceof Controls\SelectBox:
 				case $control instanceof Controls\MultiSelectBox:
-					$control->getControlPrototype()->addClass('form-control me-3'); // me-3 místo mx-sm-3
+					$control->getControlPrototype()->addClass('form-control me-3');
 					break;
 
 				case $control instanceof Controls\Checkbox:
