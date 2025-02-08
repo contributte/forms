@@ -10,7 +10,7 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 {
 
 	/** @var mixed[] */
-	public $wrappers = [
+	public array $wrappers = [
 		'form' => [
 			'container' => null,
 		],
@@ -63,7 +63,7 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 	 * @param string|null $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
-	public function render(Form $form, $mode = null): string
+	public function render(Form $form, ?string $mode = null): string
 	{
 		$form->getElementPrototype()->setNovalidate(true);
 

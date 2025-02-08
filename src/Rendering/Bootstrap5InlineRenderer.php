@@ -10,7 +10,7 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
 {
 
   /** @var mixed[] */
-	public $wrappers = [
+	public array $wrappers = [
 	'form' => [
 	  'container' => '',
 	],
@@ -62,7 +62,7 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
    *
    * @param string|null $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
    */
-	public function render(Form $form, $mode = null): string
+	public function render(Form $form, ?string $mode = null): string
 	{
 		$form->getElementPrototype()->addClass('d-inline-flex gap-2');
 

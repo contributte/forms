@@ -239,9 +239,7 @@ test(function (): void {
 	Assert::equal(new DateTime('2022-01-05 00:00:00'), $control->getValue());
 	Assert::equal(new DateTimeImmutable('2022-01-05 00:00:00'), $control->getValueAs(DateTimeImmutable::class));
 	Assert::equal(new DateTime('2022-01-05 00:00:00'), $control->getValueAs(DateTime::class));
-	Assert::equal('2022-01-05T00:00:00+01:00', $control->getValueAs(function (DateTimeImmutable $value) {
-		return $value->format(DateTimeInterface::ATOM);
-	}));
+	Assert::equal('2022-01-05T00:00:00+01:00', $control->getValueAs(fn (DateTimeImmutable $value) => $value->format(DateTimeInterface::ATOM)));
 });
 
 test(function (): void {
@@ -252,22 +250,16 @@ test(function (): void {
 	Assert::equal(new NetteDateTime('2022-01-05 00:00:00'), $control->getValue());
 	Assert::equal(new DateTimeImmutable('2022-01-05 00:00:00'), $control->getValueAs(DateTimeImmutable::class));
 	Assert::equal(new DateTime('2022-01-05 00:00:00'), $control->getValueAs(DateTime::class));
-	Assert::equal('2022-01-05T00:00:00+01:00', $control->getValueAs(function (DateTimeImmutable $value) {
-		return $value->format(DateTimeInterface::ATOM);
-	}));
+	Assert::equal('2022-01-05T00:00:00+01:00', $control->getValueAs(fn (DateTimeImmutable $value) => $value->format(DateTimeInterface::ATOM)));
 });
 
 test(function (): void {
 	$control = new DateInput(null, 'd.m.Y');
-	$control->setValueType(function (DateTimeImmutable $value) {
-		return NetteDateTime::from($value);
-	});
+	$control->setValueType(fn (DateTimeImmutable $value) => NetteDateTime::from($value));
 	$control->setDefaultValue(new DateTimeImmutable('2022-01-05 12:30:45'));
 	Assert::equal('05.01.2022', $control->getRawValue());
 	Assert::equal(new NetteDateTime('2022-01-05 00:00:00'), $control->getValue());
 	Assert::equal(new DateTimeImmutable('2022-01-05 00:00:00'), $control->getValueAs(DateTimeImmutable::class));
 	Assert::equal(new DateTime('2022-01-05 00:00:00'), $control->getValueAs(DateTime::class));
-	Assert::equal('2022-01-05T00:00:00+01:00', $control->getValueAs(function (DateTimeImmutable $value) {
-		return $value->format(DateTimeInterface::ATOM);
-	}));
+	Assert::equal('2022-01-05T00:00:00+01:00', $control->getValueAs(fn (DateTimeImmutable $value) => $value->format(DateTimeInterface::ATOM)));
 });

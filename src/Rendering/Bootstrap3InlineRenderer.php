@@ -10,7 +10,7 @@ class Bootstrap3InlineRenderer extends DefaultFormRenderer
 {
 
 	/** @var mixed[] */
-	public $wrappers = [
+	public array $wrappers = [
 		'form' => [
 			'container' => '',
 		],
@@ -64,7 +64,7 @@ class Bootstrap3InlineRenderer extends DefaultFormRenderer
 	 * @param string|null $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
-	public function render(Form $form, $mode = null): string
+	public function render(Form $form, ?string $mode = null): string
 	{
 		$form->getElementPrototype()->addClass('form-inline');
 

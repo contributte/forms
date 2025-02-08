@@ -1,13 +1,17 @@
 includes:
-	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
-	- vendor/phpstan/phpstan-nette/extension.neon
-	- vendor/phpstan/phpstan-nette/rules.neon
-	- vendor/phpstan/phpstan-strict-rules/rules.neon
+	- vendor/contributte/phpstan/phpstan.neon
 
 parameters:
-	bootstrapFiles:
-		- vendor/nette/forms/src/compatibility.php
-	ignoreErrors:
-		# It is contravariant, original typehint is not recognized properly
-		- '#^Parameter \#1 \$value \(string\) of method Contributte\\Forms\\Controls\\ProtectionFastInput\:\:setValue\(\) should be contravariant with parameter \$value \(mixed\) of method Nette\\Forms\\.+\:\:setValue\(\)$#'
-		- '#^Call to deprecated method getSeparatorPrototype\(\) of class Nette\\Forms\\Controls\\Checkbox#'
+	level: 9
+	phpVersion: 80200
+
+	scanDirectories:
+		- src
+
+	fileExtensions:
+		- php
+		- phpt
+
+	paths:
+		- src
+		- .docs

@@ -19,61 +19,76 @@ use function is_string;
 abstract class AbstractDateTimeInput extends BaseControl
 {
 
-	/** @var DateTimeParser */
-	protected $parser;
+	protected DateTimeParser $parser;
 
 	/** @var callable(DateTimeImmutable ): mixed|null */
 	protected $valueTransformation = null;
 
-	/** @var ?DateTimeInterface */
-	protected $min = null;
+	protected ?DateTimeInterface $min = null;
 
-	/** @var ?DateTimeInterface */
-	protected $max = null;
+	protected ?DateTimeInterface $max = null;
 
-	/** @var string */
-	protected $defaultHumanFormat = 'Y-m-d H:i';
+	protected string $defaultHumanFormat = 'Y-m-d H:i';
 
-	/** @var string */
-	protected $htmlFormat = 'Y-m-d\TH:i';
+	protected string $htmlFormat = 'Y-m-d\TH:i';
 
-	/** @var string */
-	protected $htmlClass = '';
+	protected string $htmlClass = '';
 
-	/** @var string|object */
-	protected $invalidValueMessage = 'Invalid format';
+	protected string|object $invalidValueMessage = 'Invalid format';
 
 	/**
 	 * @param string|string[] $format
 	 */
-	public function __construct(?string $label = null, $format = null)
+	public function __construct(?string $label = null, string|array|null $format = null)
 	{
 		parent::__construct($label);
+
 		$this->parser = new DateTimeParser();
 		if ($format !== null) {
 			$this->setFormat($format);
 		}
 	}
 
+	public static function validateMin(AbstractDateTimeInput $control, string $minimum): bool
+	{
+		return $control->getValueAsDateTimeImmutable() === null || $control->getValueAsDateTimeImmutable() >= $control->getMin();
+	}
+
+	public static function validateMax(AbstractDateTimeInput $control, string $maximum): bool
+	{
+		return $control->getValueAsDateTimeImmutable() === null || $control->getValueAsDateTimeImmutable() <= $control->getMax();
+	}
+
+	/**
+	 * @param array{0: string, 1: string} $range
+	 */
+	public static function validateRange(AbstractDateTimeInput $control, array $range): bool
+	{
+		if ($control->getMin() !== null && !self::validateMin($control, $range[0])) {
+			return false;
+		}
+
+		return $control->getMax() === null || self::validateMax($control, $range[1]);
+	}
+
 	/**
 	 * @param string|string[] $format
 	 * @return static
 	 */
-	public function setFormat($format)
+	public function setFormat(string|array $format): static
 	{
 		if (is_string($format)) {
 			$format = [$format];
 		}
 
 		if (!is_array($format) || /** @phpstan-ignore-line */
-			Arrays::some($format, function ($item) {
-				return !is_string($item);
-			})
+			Arrays::some($format, fn ($item) => !is_string($item))
 		) {
 			throw new InvalidArgumentException('Format must be either string or array of strings.');
 		}
 
 		$this->parser->setFormats($format);
+
 		return $this;
 	}
 
@@ -82,64 +97,20 @@ abstract class AbstractDateTimeInput extends BaseControl
 	 * @phpstan-param class-string|callable(DateTimeInterface): mixed $type
 	 * @return static
 	 */
-	public function setValueType($type)
+	public function setValueType(string|callable $type): static
 	{
 		$this->valueTransformation = $this->createValueTransformation($type);
+
 		return $this;
-	}
-
-	/**
-	 * @template T
-	 * @param string|callable $type
-	 * @phpstan-param class-string<T>|callable(DateTimeInterface): ?T $type
-	 * @return callable(DateTimeInterface): ?T
-	 */
-	protected function createValueTransformation($type)
-	{
-		if (is_callable($type)) {
-			return $type;
-		} elseif (is_string($type)) { /** @phpstan-ignore-line */
-			if (!class_exists($type) || class_implements($type) === false || !in_array('DateTimeInterface', class_implements($type), true)) {
-				throw new InvalidArgumentException('Value type must be existing class implementing \DateTimeInterface');
-			}
-		} else {
-			throw new InvalidArgumentException('Value type can be only string with class name or or callback.');
-		}
-
-		if ($type === 'Nette\Utils\DateTime' || (class_parents($type) !== false && in_array('Nette\Utils\DateTime', class_parents($type), true))) {
-			return [$type, 'from']; /** @phpstan-ignore-line */
-		} else {
-			/** @phpstan-var callable(DateTimeInterface): ?T $transformation */
-			$transformation = function (DateTimeInterface $value) use ($type) {
-				/** @phpstan-ignore-next-line */
-				return call_user_func([$type, 'createFromFormat'], 'Y-m-d\TH:i:s.ue|', $value->format('Y-m-d\TH:i:s.ue'));
-			};
-			return $transformation;
-		}
-	}
-
-	/**
-	 * @return mixed
-	 */
-	protected function transformValue(?DateTimeImmutable $value)
-	{
-		if ($value === null) {
-			return null;
-		}
-
-		if (is_callable($this->valueTransformation)) {
-			$value = call_user_func($this->valueTransformation, $value);
-		}
-
-		return $value;
 	}
 
 	/**
 	 * @return static
 	 */
-	public function addFormat(string $format)
+	public function addFormat(string $format): static
 	{
 		$this->parser->addFormat($format);
+
 		return $this;
 	}
 
@@ -158,22 +129,7 @@ abstract class AbstractDateTimeInput extends BaseControl
 		return count($this->parser->getFormats()) > 0;
 	}
 
-	protected function normalizeDateTime(DateTimeInterface $datetime): DateTimeImmutable
-	{
-		if ($datetime instanceof DateTime) {
-			$datetime = $this->createValueTransformation(DateTimeImmutable::class)($datetime);
-			if ($datetime === null) {
-				throw new InvalidArgumentException('Cannot normalize value');
-			}
-		}
-
-		return $datetime;
-	}
-
-	/**
-	 * @return static
-	 */
-	public function setValue($value)
+	public function setValue(mixed $value): static
 	{
 		if ($value instanceof DateTimeInterface) {
 			$value = $this->normalizeDateTime($value)->format($this->getFormat());
@@ -182,13 +138,11 @@ abstract class AbstractDateTimeInput extends BaseControl
 		}
 
 		parent::setValue($value);
+
 		return $this;
 	}
 
-	/**
-	 * @param mixed $value
-	 */
-	public function setDefaultValue($value)
+	public function setDefaultValue(mixed $value): static
 	{
 		if (is_string($value)) {
 			$value = $this->parser->parse($value) ?? $value;
@@ -197,48 +151,22 @@ abstract class AbstractDateTimeInput extends BaseControl
 		return parent::setDefaultValue($value);
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getValue()
+	public function getValue(): mixed
 	{
 		return $this->transformValue($this->getValueAsDateTimeImmutable());
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getRawValue()
+	public function getRawValue(): mixed
 	{
 		return parent::getValue();
 	}
 
 	/**
-	 * @return ?DateTimeImmutable
-	 */
-	protected function getValueAsDateTimeImmutable()
-	{
-		if ($this->value === null || $this->value === '') {
-			return null;
-		}
-
-		$date = $this->parser->parse($this->value);
-		if ($date === null) {
-			$this->addError($this->invalidValueMessage);
-			return null;
-		}
-
-		return $date;
-	}
-
-	/**
 	 * @template T
-	 * @param string|callable $type
 	 * @phpstan-param class-string<T>|callable(DateTimeInterface): ?T $type
-	 * @return mixed
 	 * @phpstan-return ?T
 	 */
-	public function getValueAs($type)
+	public function getValueAs(string|callable $type): mixed
 	{
 		$value = $this->getValueAsDateTimeImmutable();
 		if ($value === null) {
@@ -254,22 +182,19 @@ abstract class AbstractDateTimeInput extends BaseControl
 	}
 
 	/**
-	 * @param string|object $message
 	 * @return static
 	 */
-	public function setInvalidValueMessage($message)
+	public function setInvalidValueMessage(string|object $message): static
 	{
 		$this->invalidValueMessage = $message;
+
 		return $this;
 	}
 
 	/**
-	 * @param callable|string $validator
-	 * @param string|object $message
-	 * @param mixed $arg
 	 * @return static
 	 */
-	public function addRule($validator, $message = null, $arg = null)
+	public function addRule(callable|string $validator, string|object|null $message = null, mixed $arg = null): static
 	{
 		switch ($validator) {
 			case Form::MIN:
@@ -317,7 +242,6 @@ abstract class AbstractDateTimeInput extends BaseControl
 	{
 		return $this->min;
 	}
-
 
 	public function getMax(): ?DateTimeInterface
 	{
@@ -393,26 +317,71 @@ abstract class AbstractDateTimeInput extends BaseControl
 		}
 	}
 
-	public static function validateMin(AbstractDateTimeInput $control, string $minimum): bool
-	{
-		return $control->getValueAsDateTimeImmutable() === null || $control->getValueAsDateTimeImmutable() >= $control->getMin();
-	}
-
-	public static function validateMax(AbstractDateTimeInput $control, string $maximum): bool
-	{
-		return $control->getValueAsDateTimeImmutable() === null || $control->getValueAsDateTimeImmutable() <= $control->getMax();
-	}
-
 	/**
-	 * @param array{0: string, 1: string} $range
+	 * @template T
+	 * @phpstan-param class-string<T>|callable(DateTimeInterface): ?T $type
+	 * @return callable(DateTimeInterface): ?T
 	 */
-	public static function validateRange(AbstractDateTimeInput $control, array $range): bool
+	protected function createValueTransformation(string|callable $type): callable
 	{
-		if ($control->getMin() !== null && !self::validateMin($control, $range[0])) {
-			return false;
+		if (is_callable($type)) {
+			return $type;
+		} elseif (is_string($type)) {
+			if (!class_exists($type) || class_implements($type) === false || !in_array('DateTimeInterface', class_implements($type), true)) {
+				throw new InvalidArgumentException('Value type must be existing class implementing \DateTimeInterface');
+			}
+		} else {
+			throw new InvalidArgumentException('Value type can be only string with class name or or callback.');
 		}
 
-		return $control->getMax() === null || self::validateMax($control, $range[1]);
+		if ($type === 'Nette\Utils\DateTime' || (class_parents($type) !== false && in_array('Nette\Utils\DateTime', class_parents($type), true))) {
+			return [$type, 'from'];
+		} else {
+			$transformation = fn (DateTimeInterface $value) => call_user_func([$type, 'createFromFormat'], 'Y-m-d\TH:i:s.ue|', $value->format('Y-m-d\TH:i:s.ue'));
+
+			return $transformation;
+		}
+	}
+
+	protected function transformValue(?DateTimeImmutable $value): mixed
+	{
+		if ($value === null) {
+			return null;
+		}
+
+		if (is_callable($this->valueTransformation)) {
+			$value = call_user_func($this->valueTransformation, $value);
+		}
+
+		return $value;
+	}
+
+	protected function normalizeDateTime(DateTimeInterface $datetime): DateTimeImmutable
+	{
+		if ($datetime instanceof DateTime) {
+			$datetime = $this->createValueTransformation(DateTimeImmutable::class)($datetime);
+			if ($datetime === null) {
+				throw new InvalidArgumentException('Cannot normalize value');
+			}
+		}
+
+		return $datetime;
+	}
+
+	protected function getValueAsDateTimeImmutable(): ?DateTimeImmutable
+	{
+		if ($this->value === null || $this->value === '') {
+			return null;
+		}
+
+		$date = $this->parser->parse($this->value);
+		if ($date === null) {
+			$this->addError($this->invalidValueMessage);
+
+			return null;
+		}
+
+		return $date;
 	}
 
 }
