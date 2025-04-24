@@ -69,7 +69,7 @@ class Bootstrap5VerticalRenderer extends DefaultFormRenderer
 		$onlyButton = Helpers::onlyOneButton($form);
 
 		foreach ($form->getControls() as $control) {
-			if ($control instanceof Controls\BaseControl) {
+			if ($control instanceof Controls\BaseControl && !$control instanceof Controls\Checkbox) {
 				$control->getLabelPrototype()->addClass('col-form-label');
 			}
 
