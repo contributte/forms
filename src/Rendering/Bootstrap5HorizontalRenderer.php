@@ -34,7 +34,7 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 	  '.odd' => null,
 	],
 	'control' => [
-	  'container' => 'div class="col-sm-%colsControl%"',
+	  'container' => 'div class="col-%colsControl%"',
 	  '.odd' => null,
 	  'description' => 'span class="form-text"',
 	  'requiredsuffix' => '',
@@ -56,6 +56,7 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 	'hidden' => [
 	  'container' => 'div',
 	],
+
 	];
 
   /**
@@ -74,7 +75,7 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 			&& !($control instanceof Controls\Checkbox)
 			&& !($control instanceof Controls\CheckboxList)
 			&& !($control instanceof Controls\RadioList)) {
-				$control->getLabelPrototype()->addClass($this->replacePlaceholders('col-form-label col-sm-%colsLabel%'));
+				$control->getLabelPrototype()->addClass($this->replacePlaceholders('col-form-label col-%colsLabel%'));
 			}
 
 			switch (true) {
@@ -98,10 +99,14 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 					break;
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
-					$control->getSeparatorPrototype()->setName('div')->addClass('form-check pt-2');
+					$control->getContainerPrototype()
+						->setName('div')
+						->addAttributes(['class' => 'pt-2']);
+					$control->getSeparatorPrototype()->setName('div')->addClass('form-check');
 					$control->getControlPrototype()->addClass('form-check-input');
 					$control->getLabelPrototype()->addClass('form-check-label');
 					break;
+
 			}
 		}
 
@@ -113,12 +118,12 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 		$label = parent::renderLabel($control);
 
 		if ($control instanceof Controls\Button) {
-			$label->addHtml($this->replacePlaceholders('<div class="col-sm-%colsLabel%"></div>'));
+			$label->addHtml($this->replacePlaceholders('<div class="col-%colsLabel%"></div>'));
 		}
 
 		if ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
 			return Html::el('div')
-				->addClass($this->replacePlaceholders('col-form-label col-sm-%colsLabel%'))
+				->addClass($this->replacePlaceholders('col-form-label col-%colsLabel%'))
 				->addHtml($label);
 		}
 
