@@ -117,10 +117,6 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 	{
 		$label = parent::renderLabel($control);
 
-		if ($control instanceof Controls\Button) {
-			$label->addHtml($this->replacePlaceholders('<div class="col-%colsLabel%"></div>'));
-		}
-
 		if ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
 			return Html::el('div')
 				->addClass($this->replacePlaceholders('col-form-label col-%colsLabel%'))
