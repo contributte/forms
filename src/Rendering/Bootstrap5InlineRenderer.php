@@ -19,7 +19,7 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
 	  'item' => 'p',
 	],
 	'group' => [
-	  'container' => 'fieldset',
+	  'container' => '',
 	  'label' => 'legend',
 	  'description' => 'p',
 	],
@@ -27,7 +27,6 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
 	  'container' => '',
 	],
 	'pair' => [
-	  'container' => 'div class="mb-3"',
 	  '.required' => 'required',
 	  '.optional' => null,
 	  '.odd' => null,
