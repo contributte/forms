@@ -38,7 +38,7 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 	  '.odd' => null,
 	  'description' => 'span class="form-text"',
 	  'requiredsuffix' => '',
-	  'errorcontainer' => 'span class="form-text"',
+	  'errorcontainer' => 'div class="invalid-feedback"',
 	  'erroritem' => '',
 	  '.required' => 'required',
 	  '.text' => 'text',
@@ -71,11 +71,23 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 		$onlyButton = Helpers::onlyOneButton($form);
 
 		foreach ($form->getControls() as $control) {
+			if ($control instanceof Controls\BaseControl && $control->hasErrors()) {
+				$control->getControlPrototype()->addClass('is-invalid');
+			}
+
 			if ($control instanceof Controls\BaseControl
 			&& !($control instanceof Controls\Checkbox)
 			&& !($control instanceof Controls\CheckboxList)
 			&& !($control instanceof Controls\RadioList)) {
 				$control->getLabelPrototype()->addClass($this->replacePlaceholders('col-form-label col-%colsLabel%'));
+			}
+
+			// the .invalid-feedback expects .is-invalid on the same level to be displayed
+			if ($control->hasErrors() 
+			&& ($control instanceof Controls\Checkbox 
+			|| $control instanceof Controls\CheckboxList
+			|| $control instanceof Controls\RadioList)) {
+				$control->getSeparatorPrototype()->setName('div')->addClass('is-invalid');
 			}
 
 			switch (true) {

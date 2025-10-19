@@ -36,7 +36,7 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
 	  '.odd' => null,
 	  'description' => 'span class="form-text"',
 	  'requiredsuffix' => '',
-	  'errorcontainer' => 'span class="form-text"',
+	  'errorcontainer' => 'div class="invalid-feedback"',
 	  'erroritem' => '',
 	  '.required' => 'required',
 	  '.text' => 'text',
@@ -68,6 +68,10 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
 		$onlyButton = Helpers::onlyOneButton($form);
 
 		foreach ($form->getControls() as $control) {
+			if ($control instanceof Controls\BaseControl && $control->hasErrors()) {
+				$control->getControlPrototype()->addClass('is-invalid');
+			}
+
 			if ($control instanceof Controls\BaseControl) {
 				$control->getLabelPrototype()->addClass('col-form-label');
 			}
@@ -89,6 +93,10 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
+					// the .invalid-feedback expects .is-invalid on the same level to be displayed
+					if ($control->hasErrors()) {
+						$control->getSeparatorPrototype()->setName('div')->addClass('is-invalid');
+					}
 					$control->getSeparatorPrototype()->setName('div')->addClass('form-check form-check-inline');
 					$control->getControlPrototype()->addClass('form-check-input');
 					$control->getLabelPrototype()->addClass('form-check-label');
