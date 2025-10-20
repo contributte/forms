@@ -97,6 +97,7 @@ class Bootstrap5InlineRenderer extends DefaultFormRenderer
 					if ($control->hasErrors()) {
 						$control->getSeparatorPrototype()->setName('div')->addClass('is-invalid');
 					}
+
 					$control->getSeparatorPrototype()->setName('div')->addClass('form-check form-check-inline');
 					$control->getControlPrototype()->addClass('form-check-input');
 					$control->getLabelPrototype()->addClass('form-check-label');

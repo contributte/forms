@@ -83,8 +83,8 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 			}
 
 			// the .invalid-feedback expects .is-invalid on the same level to be displayed
-			if ($control->hasErrors() 
-			&& ($control instanceof Controls\Checkbox 
+			if ($control->hasErrors()
+			&& ($control instanceof Controls\Checkbox
 			|| $control instanceof Controls\CheckboxList
 			|| $control instanceof Controls\RadioList)) {
 				$control->getSeparatorPrototype()->setName('div')->addClass('is-invalid');

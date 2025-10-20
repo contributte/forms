@@ -98,10 +98,11 @@ class Bootstrap5VerticalRenderer extends DefaultFormRenderer
 					if ($control->hasErrors()) {
 						$control->getSeparatorPrototype()->setName('div')->addClass('is-invalid');
 					}
+
 					$control->getSeparatorPrototype()->setName('div')->addClass('form-check');
 					$control->getControlPrototype()->addClass('form-check-input');
 					$control->getLabelPrototype()->addClass('form-check-label');
-								break;
+					break;
 			}
 		}
 
