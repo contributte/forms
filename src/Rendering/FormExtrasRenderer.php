@@ -5,10 +5,6 @@ namespace Contributte\Forms\Rendering;
 use Nette\Forms\Form;
 use Nette\Forms\IFormRenderer;
 
-/**
- * Decorator renderer that adds extra JS functionality.
- * Wraps any existing renderer and injects JS code when data attributes are present.
- */
 class FormExtrasRenderer implements IFormRenderer
 {
 
@@ -23,7 +19,6 @@ class FormExtrasRenderer implements IFormRenderer
 	{
 		$html = $this->inner->render($form, $mode);
 
-		// Only inject JS when rendering full form or 'end'
 		if ($mode === null || $mode === 'end') {
 			$html .= $this->renderExtras($form);
 		}
@@ -36,7 +31,6 @@ class FormExtrasRenderer implements IFormRenderer
 		$el = $form->getElementPrototype();
 		$extras = '';
 
-		// Unsaved changes confirmation
 		if ($el->data('confirm-unsaved')) {
 			$extras .= $this->renderConfirmScript($form);
 		}
@@ -49,7 +43,6 @@ class FormExtrasRenderer implements IFormRenderer
 		$formId = $form->getElementPrototype()->getId();
 		$message = $form->getElementPrototype()->data('confirm-message');
 
-		// Use form ID if available, otherwise use data attribute selector
 		if ($formId) {
 			$selector = '#' . $formId;
 		} else {
