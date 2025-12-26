@@ -10,17 +10,18 @@ use Nette\Utils\Html;
 class TimeInput extends AbstractDateTimeInput
 {
 
-	protected $defaultHumanFormat = 'H:i';
+	protected string $defaultHumanFormat = 'H:i';
 
-	protected $htmlFormat = 'H:i';
+	protected string $htmlFormat = 'H:i';
 
-	protected $htmlClass = 'time-input';
+	protected string $htmlClass = 'time-input';
 
-	protected function normalizeDateTime(DateTimeInterface $datetime): DateTimeImmutable
+	public static function register(?string $defaultFormat = null): void
 	{
-		$datetime = parent::normalizeDateTime($datetime);
-		$datetime = $datetime->setDate(1970, 1, 1);
-		return $datetime;
+		Container::extensionMethod(
+			'addTime',
+			fn ($container, $name, $label = null, $format = null): TimeInput => $container[$name] = new TimeInput($label, $format ?? $defaultFormat)
+		);
 	}
 
 	public function getControl(): Html
@@ -33,14 +34,12 @@ class TimeInput extends AbstractDateTimeInput
 		return $control;
 	}
 
-	public static function register(?string $defaultFormat = null): void
+	protected function normalizeDateTime(DateTimeInterface $datetime): DateTimeImmutable
 	{
-		Container::extensionMethod(
-			'addTime',
-			function ($container, $name, $label = null, $format = null) use ($defaultFormat): TimeInput {
-				return $container[$name] = new TimeInput($label, $format ?? $defaultFormat);
-			}
-		);
+		$datetime = parent::normalizeDateTime($datetime);
+		$datetime = $datetime->setDate(1970, 1, 1);
+
+		return $datetime;
 	}
 
 }

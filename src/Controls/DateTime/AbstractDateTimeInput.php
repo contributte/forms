@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Nette\Forms\Controls\BaseControl;
 use Nette\Forms\Form;
-use Nette\Utils\Arrays;
 use Nette\Utils\Html;
 use function class_exists;
 use function count;
@@ -19,36 +18,30 @@ use function is_string;
 abstract class AbstractDateTimeInput extends BaseControl
 {
 
-	/** @var DateTimeParser */
-	protected $parser;
+	protected DateTimeParser $parser;
 
-	/** @var callable(DateTimeImmutable ): mixed|null */
-	protected $valueTransformation = null;
+	/** @var callable(DateTimeImmutable): mixed|null */
+	protected mixed $valueTransformation = null;
 
-	/** @var ?DateTimeInterface */
-	protected $min = null;
+	protected ?DateTimeInterface $min = null;
 
-	/** @var ?DateTimeInterface */
-	protected $max = null;
+	protected ?DateTimeInterface $max = null;
 
-	/** @var string */
-	protected $defaultHumanFormat = 'Y-m-d H:i';
+	protected string $defaultHumanFormat = 'Y-m-d H:i';
 
-	/** @var string */
-	protected $htmlFormat = 'Y-m-d\TH:i';
+	protected string $htmlFormat = 'Y-m-d\TH:i';
 
-	/** @var string */
-	protected $htmlClass = '';
+	protected string $htmlClass = '';
 
-	/** @var string|object */
-	protected $invalidValueMessage = 'Invalid format';
+	protected string|\Stringable $invalidValueMessage = 'Invalid format';
 
 	/**
 	 * @param string|string[] $format
 	 */
-	public function __construct(?string $label = null, $format = null)
+	public function __construct(?string $label = null, string|array|null $format = null)
 	{
 		parent::__construct($label);
+
 		$this->parser = new DateTimeParser();
 		if ($format !== null) {
 			$this->setFormat($format);
@@ -59,21 +52,18 @@ abstract class AbstractDateTimeInput extends BaseControl
 	 * @param string|string[] $format
 	 * @return static
 	 */
-	public function setFormat($format)
+	public function setFormat(string|array $format): static
 	{
-		if (is_string($format)) {
-			$format = [$format];
+		$formats = is_array($format) ? $format : [$format];
+
+		foreach ($formats as $item) {
+			if (!is_string($item)) {
+				throw new InvalidArgumentException('Format must be either string or array of strings.');
+			}
 		}
 
-		if (!is_array($format) || /** @phpstan-ignore-line */
-			Arrays::some($format, function ($item) {
-				return !is_string($item);
-			})
-		) {
-			throw new InvalidArgumentException('Format must be either string or array of strings.');
-		}
+		$this->parser->setFormats($formats);
 
-		$this->parser->setFormats($format);
 		return $this;
 	}
 
@@ -82,46 +72,43 @@ abstract class AbstractDateTimeInput extends BaseControl
 	 * @phpstan-param class-string|callable(DateTimeInterface): mixed $type
 	 * @return static
 	 */
-	public function setValueType($type)
+	public function setValueType(string|callable $type): static
 	{
 		$this->valueTransformation = $this->createValueTransformation($type);
+
 		return $this;
 	}
 
 	/**
 	 * @template T
-	 * @param string|callable $type
 	 * @phpstan-param class-string<T>|callable(DateTimeInterface): ?T $type
 	 * @return callable(DateTimeInterface): ?T
 	 */
-	protected function createValueTransformation($type)
+	protected function createValueTransformation(string|callable $type): callable
 	{
 		if (is_callable($type)) {
 			return $type;
-		} elseif (is_string($type)) { /** @phpstan-ignore-line */
-			if (!class_exists($type) || class_implements($type) === false || !in_array('DateTimeInterface', class_implements($type), true)) {
-				throw new InvalidArgumentException('Value type must be existing class implementing \DateTimeInterface');
-			}
-		} else {
-			throw new InvalidArgumentException('Value type can be only string with class name or or callback.');
+		}
+
+		if (!class_exists($type) || class_implements($type) === false || !in_array('DateTimeInterface', class_implements($type), true)) {
+			throw new InvalidArgumentException('Value type must be existing class implementing \DateTimeInterface');
 		}
 
 		if ($type === 'Nette\Utils\DateTime' || (class_parents($type) !== false && in_array('Nette\Utils\DateTime', class_parents($type), true))) {
-			return [$type, 'from']; /** @phpstan-ignore-line */
-		} else {
-			/** @phpstan-var callable(DateTimeInterface): ?T $transformation */
-			$transformation = function (DateTimeInterface $value) use ($type) {
-				/** @phpstan-ignore-next-line */
-				return call_user_func([$type, 'createFromFormat'], 'Y-m-d\TH:i:s.ue|', $value->format('Y-m-d\TH:i:s.ue'));
-			};
-			return $transformation;
+			/** @phpstan-ignore-next-line */
+			return [$type, 'from'];
 		}
+
+		/**
+		 * @phpstan-var callable(DateTimeInterface): ?T $transformation
+		 * @phpstan-ignore-next-line
+		 */
+		$transformation = fn (DateTimeInterface $value) => call_user_func([$type, 'createFromFormat'], 'Y-m-d\TH:i:s.ue|', $value->format('Y-m-d\TH:i:s.ue'));
+
+		return $transformation;
 	}
 
-	/**
-	 * @return mixed
-	 */
-	protected function transformValue(?DateTimeImmutable $value)
+	protected function transformValue(?DateTimeImmutable $value): mixed
 	{
 		if ($value === null) {
 			return null;
@@ -137,9 +124,10 @@ abstract class AbstractDateTimeInput extends BaseControl
 	/**
 	 * @return static
 	 */
-	public function addFormat(string $format)
+	public function addFormat(string $format): static
 	{
 		$this->parser->addFormat($format);
+
 		return $this;
 	}
 
@@ -173,7 +161,7 @@ abstract class AbstractDateTimeInput extends BaseControl
 	/**
 	 * @return static
 	 */
-	public function setValue($value)
+	public function setValue(mixed $value): static
 	{
 		if ($value instanceof DateTimeInterface) {
 			$value = $this->normalizeDateTime($value)->format($this->getFormat());
@@ -182,13 +170,14 @@ abstract class AbstractDateTimeInput extends BaseControl
 		}
 
 		parent::setValue($value);
+
 		return $this;
 	}
 
 	/**
-	 * @param mixed $value
+	 * @return static
 	 */
-	public function setDefaultValue($value)
+	public function setDefaultValue(mixed $value): static
 	{
 		if (is_string($value)) {
 			$value = $this->parser->parse($value) ?? $value;
@@ -197,26 +186,17 @@ abstract class AbstractDateTimeInput extends BaseControl
 		return parent::setDefaultValue($value);
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getValue()
+	public function getValue(): mixed
 	{
 		return $this->transformValue($this->getValueAsDateTimeImmutable());
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getRawValue()
+	public function getRawValue(): mixed
 	{
 		return parent::getValue();
 	}
 
-	/**
-	 * @return ?DateTimeImmutable
-	 */
-	protected function getValueAsDateTimeImmutable()
+	protected function getValueAsDateTimeImmutable(): ?DateTimeImmutable
 	{
 		if ($this->value === null || $this->value === '') {
 			return null;
@@ -225,6 +205,7 @@ abstract class AbstractDateTimeInput extends BaseControl
 		$date = $this->parser->parse($this->value);
 		if ($date === null) {
 			$this->addError($this->invalidValueMessage);
+
 			return null;
 		}
 
@@ -233,12 +214,10 @@ abstract class AbstractDateTimeInput extends BaseControl
 
 	/**
 	 * @template T
-	 * @param string|callable $type
 	 * @phpstan-param class-string<T>|callable(DateTimeInterface): ?T $type
-	 * @return mixed
 	 * @phpstan-return ?T
 	 */
-	public function getValueAs($type)
+	public function getValueAs(string|callable $type): mixed
 	{
 		$value = $this->getValueAsDateTimeImmutable();
 		if ($value === null) {
@@ -250,29 +229,27 @@ abstract class AbstractDateTimeInput extends BaseControl
 		}
 
 		/** @phpstan-var ?T */
+
 		return $value;
 	}
 
 	/**
-	 * @param string|object $message
 	 * @return static
 	 */
-	public function setInvalidValueMessage($message)
+	public function setInvalidValueMessage(string|\Stringable $message): static
 	{
 		$this->invalidValueMessage = $message;
+
 		return $this;
 	}
 
 	/**
-	 * @param callable|string $validator
-	 * @param string|object $message
-	 * @param mixed $arg
 	 * @return static
 	 */
-	public function addRule($validator, $message = null, $arg = null)
+	public function addRule(callable|string $validator, string|\Stringable|null $message = null, mixed $arg = null): static
 	{
 		switch ($validator) {
-			case Form::MIN:
+			case Form::Min:
 				if (!$arg instanceof DateTimeInterface) {
 					throw new InvalidArgumentException('Rule parameter expected to be \DateTimeInterface');
 				}
@@ -282,7 +259,7 @@ abstract class AbstractDateTimeInput extends BaseControl
 				$validator = static::class . '::validateMin';
 				break;
 
-			case Form::MAX:
+			case Form::Max:
 				if (!$arg instanceof DateTimeInterface) {
 					throw new InvalidArgumentException('Rule parameter expected to be \DateTimeInterface');
 				}
@@ -292,7 +269,7 @@ abstract class AbstractDateTimeInput extends BaseControl
 				$validator = static::class . '::validateMax';
 				break;
 
-			case Form::RANGE:
+			case Form::Range:
 				if (!is_array($arg) || !$arg[0] instanceof DateTimeInterface || !$arg[1] instanceof DateTimeInterface) {
 					throw new InvalidArgumentException('Rule parameter expected to be 2 item array [min, max] of \DateTimeInterface');
 				}
@@ -317,7 +294,6 @@ abstract class AbstractDateTimeInput extends BaseControl
 	{
 		return $this->min;
 	}
-
 
 	public function getMax(): ?DateTimeInterface
 	{

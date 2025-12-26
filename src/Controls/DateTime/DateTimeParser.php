@@ -15,13 +15,12 @@ class DateTimeParser
 	use SmartObject;
 
 	/** @var string[] */
-	private $formats = [];
+	private array $formats = [];
 
-	/** @var ?DateTimeZone */
-	private $defaultTimeZone = null;
+	private ?DateTimeZone $defaultTimeZone = null;
 
 	/** @var string[] */
-	private $defaultFormats = [
+	private array $defaultFormats = [
 		DateTimeInterface::ATOM,
 		DateTimeInterface::ISO8601,
 		DateTimeInterface::W3C,
@@ -63,10 +62,7 @@ class DateTimeParser
 		$this->defaultTimeZone = $timezone;
 	}
 
-	/**
-	 * @param mixed $value
-	 */
-	public function parse($value): ?DateTimeImmutable
+	public function parse(mixed $value): ?DateTimeImmutable
 	{
 		if (!is_string($value) || strlen(trim($value)) === 0) {
 			return null;
