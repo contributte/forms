@@ -2,16 +2,15 @@
 
 namespace Contributte\Forms\Rendering;
 
+use Nette\Forms\Control;
 use Nette\Forms\Controls;
 use Nette\Forms\Form;
-use Nette\Forms\IControl;
 use Nette\Utils\Html;
 
 class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 {
 
-  /** @var mixed[] */
-	public $wrappers = [
+	public array $wrappers = [
 	'form' => [
 	  'container' => null,
 	],
@@ -64,7 +63,7 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
    *
    * @param string|null $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
    */
-	public function render(Form $form, $mode = null): string
+	public function render(Form $form, ?string $mode = null): string
 	{
 		$form->getElementPrototype()->setNovalidate(true);
 
@@ -83,11 +82,11 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 			}
 
 			// the .invalid-feedback expects .is-invalid on the same level to be displayed
-			if ($control->hasErrors()
-			&& ($control instanceof Controls\Checkbox
+			if (($control instanceof Controls\Checkbox
 			|| $control instanceof Controls\CheckboxList
-			|| $control instanceof Controls\RadioList)) {
-				$control->getSeparatorPrototype()->setName('div')->addClass('is-invalid');
+			|| $control instanceof Controls\RadioList)
+			&& $control->hasErrors()) {
+				$control->getContainerPrototype()->setName('div')->addClass('is-invalid');
 			}
 
 			switch (true) {
@@ -113,8 +112,7 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 				case $control instanceof Controls\RadioList:
 					$control->getContainerPrototype()
 						->setName('div')
-						->addAttributes(['class' => 'pt-2']);
-					$control->getSeparatorPrototype()->setName('div')->addClass('form-check');
+						->addAttributes(['class' => 'pt-2 form-check']);
 					$control->getControlPrototype()->addClass('form-check-input');
 					$control->getLabelPrototype()->addClass('form-check-label');
 					break;
@@ -125,7 +123,7 @@ class Bootstrap5HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 		return parent::render($form, $mode);
 	}
 
-	public function renderLabel(IControl $control): Html
+	public function renderLabel(Control $control): Html
 	{
 		$label = parent::renderLabel($control);
 

@@ -11,17 +11,18 @@ use Nette\Utils\Html;
 class DateInput extends AbstractDateTimeInput
 {
 
-	protected $defaultHumanFormat = 'Y-m-d';
+	protected string $defaultHumanFormat = 'Y-m-d';
 
-	protected $htmlFormat = 'Y-m-d';
+	protected string $htmlFormat = 'Y-m-d';
 
-	protected $htmlClass = 'date-input';
+	protected string $htmlClass = 'date-input';
 
-	protected function normalizeDateTime(DateTimeInterface $datetime): DateTimeImmutable
+	public static function register(?string $defaultFormat = null): void
 	{
-		$datetime = parent::normalizeDateTime($datetime);
-		$datetime = $datetime->setTime(0, 0, 0, 0);
-		return $datetime;
+		Container::extensionMethod(
+			'addDate',
+			fn ($container, $name, $label = null, $format = null, ?DateTimeZone $inputTimezone = null): DateInput => $container[$name] = new DateInput($label, $format ?? $defaultFormat)
+		);
 	}
 
 	public function getControl(): Html
@@ -34,14 +35,12 @@ class DateInput extends AbstractDateTimeInput
 		return $control;
 	}
 
-	public static function register(?string $defaultFormat = null): void
+	protected function normalizeDateTime(DateTimeInterface $datetime): DateTimeImmutable
 	{
-		Container::extensionMethod(
-			'addDate',
-			function ($container, $name, $label = null, $format = null, ?DateTimeZone $inputTimezone = null) use ($defaultFormat): DateInput {
-				return $container[$name] = new DateInput($label, $format ?? $defaultFormat);
-			}
-		);
+		$datetime = parent::normalizeDateTime($datetime);
+		$datetime = $datetime->setTime(0, 0, 0, 0);
+
+		return $datetime;
 	}
 
 }

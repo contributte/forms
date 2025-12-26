@@ -9,8 +9,7 @@ use Nette\Forms\Rendering\DefaultFormRenderer;
 class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 {
 
-	/** @var mixed[] */
-	public $wrappers = [
+	public array $wrappers = [
 		'form' => [
 			'container' => null,
 		],
@@ -63,7 +62,7 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 	 * @param string|null $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
-	public function render(Form $form, $mode = null): string
+	public function render(Form $form, ?string $mode = null): string
 	{
 		$form->getElementPrototype()->setNovalidate(true);
 
@@ -89,7 +88,7 @@ class Bootstrap4VerticalRenderer extends DefaultFormRenderer
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
-					$control->getSeparatorPrototype()->setName('div')->addClass('form-check');
+					$control->getContainerPrototype()->setName('div')->addClass('form-check');
 					$control->getControlPrototype()->addClass('form-check-input');
 					$control->getLabelPrototype()->addClass('form-check-label');
 					break;

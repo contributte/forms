@@ -10,8 +10,7 @@ use Nette\Utils\Html;
 class ProtectionFastInput extends HiddenField
 {
 
-	/** @var string */
-	private $diff;
+	private string $diff;
 
 	public function __construct(string $diff = '+5 seconds', string $message = 'Form was submitted too fast. Are you robot?')
 	{
@@ -25,18 +24,16 @@ class ProtectionFastInput extends HiddenField
 	}
 
 	/**
-	 * @param string $value
 	 * @return static
-	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
-	public function setValue($value): self
+	public function setValue(mixed $value): static
 	{
 		return $this;
 	}
 
 	public function loadHttpData(): void
 	{
-		$this->value = $this->getHttpData(Form::DATA_TEXT);
+		$this->value = $this->getHttpData(Form::DataText);
 	}
 
 	public function getControl(): Html

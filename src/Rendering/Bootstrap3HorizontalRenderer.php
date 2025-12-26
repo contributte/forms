@@ -8,8 +8,7 @@ use Nette\Forms\Form;
 class Bootstrap3HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 {
 
-	/** @var mixed[] */
-	public $wrappers = [
+	public array $wrappers = [
 		'form' => [
 			'container' => null,
 		],
@@ -63,7 +62,7 @@ class Bootstrap3HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 	 * @param string|null $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
-	public function render(Form $form, $mode = null): string
+	public function render(Form $form, ?string $mode = null): string
 	{
 		$form->getElementPrototype()->setNovalidate(true);
 
@@ -87,7 +86,7 @@ class Bootstrap3HorizontalRenderer extends AbstractBootstrapHorizontalRenderer
 				case $control instanceof Controls\Checkbox:
 				case $control instanceof Controls\CheckboxList:
 				case $control instanceof Controls\RadioList:
-					$control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
+					$control->getContainerPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
 					break;
 			}
 		}

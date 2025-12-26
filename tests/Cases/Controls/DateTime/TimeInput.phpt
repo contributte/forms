@@ -239,9 +239,7 @@ test(function (): void {
 	Assert::equal(new DateTime('1970-01-01 12:30:45'), $control->getValue());
 	Assert::equal(new DateTimeImmutable('1970-01-01 12:30:45'), $control->getValueAs(DateTimeImmutable::class));
 	Assert::equal(new DateTime('1970-01-01 12:30:45'), $control->getValueAs(DateTime::class));
-	Assert::equal('1970-01-01T12:30:45+01:00', $control->getValueAs(function (DateTimeImmutable $value) {
-		return $value->format(DateTimeInterface::ATOM);
-	}));
+	Assert::equal('1970-01-01T12:30:45+01:00', $control->getValueAs(fn (DateTimeImmutable $value) => $value->format(DateTimeInterface::ATOM)));
 });
 
 test(function (): void {
@@ -252,22 +250,16 @@ test(function (): void {
 	Assert::equal(new NetteDateTime('1970-01-01 12:30:45'), $control->getValue());
 	Assert::equal(new DateTimeImmutable('1970-01-01 12:30:45'), $control->getValueAs(DateTimeImmutable::class));
 	Assert::equal(new DateTime('1970-01-01 12:30:45'), $control->getValueAs(DateTime::class));
-	Assert::equal('1970-01-01T12:30:45+01:00', $control->getValueAs(function (DateTimeImmutable $value) {
-		return $value->format(DateTimeInterface::ATOM);
-	}));
+	Assert::equal('1970-01-01T12:30:45+01:00', $control->getValueAs(fn (DateTimeImmutable $value) => $value->format(DateTimeInterface::ATOM)));
 });
 
 test(function (): void {
 	$control = new TimeInput(null, 'H-i-s');
-	$control->setValueType(function (DateTimeImmutable $value) {
-		return NetteDateTime::from($value);
-	});
+	$control->setValueType(fn (DateTimeImmutable $value) => NetteDateTime::from($value));
 	$control->setDefaultValue(new DateTimeImmutable('2022-01-05 12:30:45'));
 	Assert::equal('12-30-45', $control->getRawValue());
 	Assert::equal(new NetteDateTime('1970-01-01 12:30:45'), $control->getValue());
 	Assert::equal(new DateTimeImmutable('1970-01-01 12:30:45'), $control->getValueAs(DateTimeImmutable::class));
 	Assert::equal(new DateTime('1970-01-01 12:30:45'), $control->getValueAs(DateTime::class));
-	Assert::equal('1970-01-01T12:30:45+01:00', $control->getValueAs(function (DateTimeImmutable $value) {
-		return $value->format(DateTimeInterface::ATOM);
-	}));
+	Assert::equal('1970-01-01T12:30:45+01:00', $control->getValueAs(fn (DateTimeImmutable $value) => $value->format(DateTimeInterface::ATOM)));
 });

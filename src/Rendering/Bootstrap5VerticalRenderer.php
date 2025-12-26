@@ -9,8 +9,7 @@ use Nette\Forms\Rendering\DefaultFormRenderer;
 class Bootstrap5VerticalRenderer extends DefaultFormRenderer
 {
 
-  /** @var mixed[] */
-	public $wrappers = [
+	public array $wrappers = [
 	'form' => [
 	  'container' => null,
 	],
@@ -62,7 +61,7 @@ class Bootstrap5VerticalRenderer extends DefaultFormRenderer
    *
    * @param string|null $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
    */
-	public function render(Form $form, $mode = null): string
+	public function render(Form $form, ?string $mode = null): string
 	{
 		$form->getElementPrototype()->setNovalidate(true);
 
@@ -96,10 +95,10 @@ class Bootstrap5VerticalRenderer extends DefaultFormRenderer
 				case $control instanceof Controls\RadioList:
 					// the .invalid-feedback expects .is-invalid on the same level to be displayed
 					if ($control->hasErrors()) {
-						$control->getSeparatorPrototype()->setName('div')->addClass('is-invalid');
+						$control->getContainerPrototype()->setName('div')->addClass('is-invalid');
 					}
 
-					$control->getSeparatorPrototype()->setName('div')->addClass('form-check');
+					$control->getContainerPrototype()->setName('div')->addClass('form-check');
 					$control->getControlPrototype()->addClass('form-check-input');
 					$control->getLabelPrototype()->addClass('form-check-label');
 					break;

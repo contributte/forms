@@ -1,18 +1,35 @@
 <?xml version="1.0"?>
 <ruleset>
-    <!-- Extending rulesets -->
-    <rule ref="vendor/ninjify/coding-standard/contributte.xml"/>
+	<rule ref="vendor/contributte/qa/ruleset.xml"/>
 
-    <!-- My rules -->
-    <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
-        <properties>
+	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+		<properties>
 			<property name="rootNamespaces" type="array">
 				<element key="src" value="Contributte\Forms"/>
-				<element key="tests/fixtures" value="Tests\Fixtures"/>
+				<element key="tests/Fixtures" value="Tests\Fixtures"/>
 			</property>
-        </properties>
-    </rule>
+		</properties>
+	</rule>
 
-    <!-- Exclude folders -->
-    <exclude-pattern>/tests/tmp</exclude-pattern>
+	<!-- Inherited $wrappers property from DefaultFormRenderer cannot have specific type -->
+	<rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification">
+		<exclude-pattern>src/Rendering/*Renderer.php</exclude-pattern>
+	</rule>
+
+	<!-- Test fixtures need superglobals for form simulation -->
+	<rule ref="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable">
+		<exclude-pattern>tests/</exclude-pattern>
+	</rule>
+
+	<!-- Nette container extension pattern uses array-like assignment -->
+	<rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation">
+		<exclude-pattern>src/Controls/DateTime/*Input.php</exclude-pattern>
+	</rule>
+
+	<!-- DateTime controls have complex inheritance requiring mixed public/protected method order -->
+	<rule ref="SlevomatCodingStandard.Classes.ClassStructure">
+		<exclude-pattern>src/Controls/DateTime/AbstractDateTimeInput.php</exclude-pattern>
+	</rule>
+
+	<exclude-pattern>/tests/tmp</exclude-pattern>
 </ruleset>

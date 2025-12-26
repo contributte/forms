@@ -7,11 +7,9 @@ use Nette\Forms\Rendering\DefaultFormRenderer;
 abstract class AbstractBootstrapHorizontalRenderer extends DefaultFormRenderer
 {
 
-	/** @var int */
-	protected $colsLabel = 3;
+	protected int $colsLabel = 3;
 
-	/** @var int */
-	protected $colsControl = 9;
+	protected int $colsControl = 9;
 
 	public function setColumns(int $colsLabel, int $colsControl): void
 	{
@@ -19,7 +17,7 @@ abstract class AbstractBootstrapHorizontalRenderer extends DefaultFormRenderer
 		$this->colsControl = $colsControl;
 	}
 
-	protected function getValue(string $name)
+	protected function getValue(string $name): mixed
 	{
 		$value = parent::getValue($name);
 		if (is_string($value)) {
@@ -33,6 +31,7 @@ abstract class AbstractBootstrapHorizontalRenderer extends DefaultFormRenderer
 	{
 		$value = str_replace('%colsLabel%', (string) $this->colsLabel, $value);
 		$value = str_replace('%colsControl%', (string) $this->colsControl, $value);
+
 		return $value;
 	}
 
