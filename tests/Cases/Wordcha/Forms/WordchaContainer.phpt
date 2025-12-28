@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-use Contributte\Tester\Toolkit;
 use Contributte\Forms\Captcha\Wordcha\Factory;
 use Contributte\Forms\Captcha\Wordcha\Form\WordchaContainer;
 use Contributte\Forms\Captcha\Wordcha\Generator\Generator;
 use Contributte\Forms\Captcha\Wordcha\Generator\Security;
 use Contributte\Forms\Captcha\Wordcha\Validator\Validator;
+use Contributte\Tester\Toolkit;
 use Nette\Forms\Controls\HiddenField;
 use Nette\Forms\Controls\TextInput;
 use Tester\Assert;

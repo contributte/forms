@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-use Contributte\Tester\Toolkit;
 use Contributte\Forms\Captcha\Wordcha\DataSource\NumericDataSource;
 use Contributte\Forms\Captcha\Wordcha\Exception\LogicalException;
+use Contributte\Tester\Toolkit;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../../bootstrap.php';
