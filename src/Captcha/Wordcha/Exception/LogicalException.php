@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha\Exception;
+namespace Contributte\Forms\Captcha\Wordcha\Exception;
 
 class LogicalException extends \LogicException
 {

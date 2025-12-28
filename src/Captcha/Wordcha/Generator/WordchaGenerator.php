@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha\Generator;
+namespace Contributte\Forms\Captcha\Wordcha\Generator;
 
-use Contributte\Forms\Wordcha\DataSource\DataSource;
+use Contributte\Forms\Captcha\Wordcha\DataSource\DataSource;
 
 class WordchaGenerator implements Generator
 {

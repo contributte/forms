@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha\Validator;
+namespace Contributte\Forms\Captcha\Wordcha\Validator;
 
-use Contributte\Forms\Wordcha\Generator\Generator;
+use Contributte\Forms\Captcha\Wordcha\Generator\Generator;
 
 class WordchaValidator implements Validator
 {

@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
 use Contributte\Tester\Toolkit;
-use Contributte\Forms\Wordcha\DI\FormBinder;
-use Contributte\Forms\Wordcha\Factory;
-use Contributte\Forms\Wordcha\Form\WordchaContainer;
-use Contributte\Forms\Wordcha\Generator\Generator;
-use Contributte\Forms\Wordcha\Generator\Security;
-use Contributte\Forms\Wordcha\Validator\Validator;
+use Contributte\Forms\Captcha\Wordcha\DI\FormBinder;
+use Contributte\Forms\Captcha\Wordcha\Factory;
+use Contributte\Forms\Captcha\Wordcha\Form\WordchaContainer;
+use Contributte\Forms\Captcha\Wordcha\Generator\Generator;
+use Contributte\Forms\Captcha\Wordcha\Generator\Security;
+use Contributte\Forms\Captcha\Wordcha\Validator\Validator;
 use Nette\Forms\Controls\HiddenField;
 use Nette\Forms\Controls\TextInput;
 use Nette\Forms\Form;

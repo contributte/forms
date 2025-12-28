@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha\DI;
+namespace Contributte\Forms\Captcha\Wordcha\DI;
 
-use Contributte\Forms\Wordcha\DataSource\DataSource;
-use Contributte\Forms\Wordcha\DataSource\NumericDataSource;
-use Contributte\Forms\Wordcha\DataSource\QuestionDataSource;
-use Contributte\Forms\Wordcha\Factory;
-use Contributte\Forms\Wordcha\WordchaFactory;
-use Contributte\Forms\Wordcha\WordchaUniqueFactory;
+use Contributte\Forms\Captcha\Wordcha\DataSource\DataSource;
+use Contributte\Forms\Captcha\Wordcha\DataSource\NumericDataSource;
+use Contributte\Forms\Captcha\Wordcha\DataSource\QuestionDataSource;
+use Contributte\Forms\Captcha\Wordcha\Factory;
+use Contributte\Forms\Captcha\Wordcha\WordchaFactory;
+use Contributte\Forms\Captcha\Wordcha\WordchaUniqueFactory;
 use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Literal;

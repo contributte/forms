@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha\DataSource;
+namespace Contributte\Forms\Captcha\Wordcha\DataSource;
 
-use Contributte\Forms\Wordcha\Exception\LogicalException;
+use Contributte\Forms\Captcha\Wordcha\Exception\LogicalException;
 use Exception;
 
 class QuestionDataSource implements DataSource

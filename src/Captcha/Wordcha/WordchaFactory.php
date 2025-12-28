@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha;
+namespace Contributte\Forms\Captcha\Wordcha;
 
-use Contributte\Forms\Wordcha\DataSource\DataSource;
-use Contributte\Forms\Wordcha\Generator\Generator;
-use Contributte\Forms\Wordcha\Generator\WordchaGenerator;
-use Contributte\Forms\Wordcha\Validator\Validator;
-use Contributte\Forms\Wordcha\Validator\WordchaValidator;
+use Contributte\Forms\Captcha\Wordcha\DataSource\DataSource;
+use Contributte\Forms\Captcha\Wordcha\Generator\Generator;
+use Contributte\Forms\Captcha\Wordcha\Generator\WordchaGenerator;
+use Contributte\Forms\Captcha\Wordcha\Validator\Validator;
+use Contributte\Forms\Captcha\Wordcha\Validator\WordchaValidator;
 
 class WordchaFactory implements Factory
 {

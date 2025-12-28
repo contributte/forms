@@ -8,7 +8,8 @@
   - [StandaloneFormFactoryExtension](#standalone-form-factory) (Nette\Forms\Form)
 - Controls
   - [Date/time inputs](#date-time-inputs) (DateTimeInput, DateInput, TimeInput)
-- [Wordcha](#wordcha) (Question-based captcha)
+- Captcha
+  - [Wordcha](#wordcha) (Question-based captcha)
 
 ## Setup
 
@@ -348,31 +349,33 @@ $control->setValueInTzAs(DateTime::class); // value in server default timezone a
 $control->setValueInTzAs(DateTime::class, new DateTimeZone('Americe/New_York')); // value in given timezone as \DateTime
 ```
 
-## Wordcha
+## Captcha
+
+### Wordcha
 
 Question-based captcha for Nette Framework / Forms.
 
-### Wordcha Setup
+#### Wordcha Setup
 
 Register extension
 
 ```yaml
 extensions:
-    wordcha: Contributte\Forms\Wordcha\DI\WordchaExtension
+    wordcha: Contributte\Forms\Captcha\Wordcha\DI\WordchaExtension
 ```
 
-### Wordcha Configuration
+#### Wordcha Configuration
 
 At the beginning you should pick the right datasource.
 
-#### Numeric datasource
+##### Numeric datasource
 
 ```yaml
 wordcha:
     datasource: numeric
 ```
 
-#### Question datasource
+##### Question datasource
 
 ```yaml
 wordcha:
@@ -382,7 +385,7 @@ wordcha:
         "Question b?": "b"
 ```
 
-### Wordcha Form Usage
+#### Wordcha Form Usage
 
 ```php
 use Nette\Application\UI\Form;
@@ -411,6 +414,6 @@ protected function createComponentForm()
 }
 ```
 
-### Wordcha Example
+#### Wordcha Example
 
 ![captcha](wordcha.png)

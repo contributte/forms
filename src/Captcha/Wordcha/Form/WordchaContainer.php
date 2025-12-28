@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha\Form;
+namespace Contributte\Forms\Captcha\Wordcha\Form;
 
-use Contributte\Forms\Wordcha\Factory;
-use Contributte\Forms\Wordcha\Generator\Generator;
-use Contributte\Forms\Wordcha\Validator\Validator;
+use Contributte\Forms\Captcha\Wordcha\Factory;
+use Contributte\Forms\Captcha\Wordcha\Generator\Generator;
+use Contributte\Forms\Captcha\Wordcha\Validator\Validator;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\HiddenField;
 use Nette\Forms\Controls\TextInput;

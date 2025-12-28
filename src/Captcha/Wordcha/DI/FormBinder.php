@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha\DI;
+namespace Contributte\Forms\Captcha\Wordcha\DI;
 
-use Contributte\Forms\Wordcha\Factory;
-use Contributte\Forms\Wordcha\Form\WordchaContainer;
+use Contributte\Forms\Captcha\Wordcha\Factory;
+use Contributte\Forms\Captcha\Wordcha\Form\WordchaContainer;
 use Nette\Forms\Container;
 
 final class FormBinder

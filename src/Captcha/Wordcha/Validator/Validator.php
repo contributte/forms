@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Forms\Wordcha\Validator;
+namespace Contributte\Forms\Captcha\Wordcha\Validator;
 
 interface Validator
 {
