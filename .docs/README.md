@@ -10,6 +10,7 @@
   - [Date/time inputs](#date-time-inputs) (DateTimeInput, DateInput, TimeInput)
 - Captcha
   - [Wordcha](#wordcha) (Question-based captcha)
+  - [Seznam Captcha](#seznam-captcha) (Image-based captcha)
 
 ## Setup
 
@@ -417,3 +418,56 @@ protected function createComponentForm()
 #### Wordcha Example
 
 ![captcha](wordcha.png)
+
+### Seznam Captcha
+
+Image-based captcha using [Seznam.cz Captcha](https://captcha.seznam.cz) service.
+
+#### Seznam Captcha Setup
+
+Register extension
+
+```yaml
+extensions:
+    seznamCaptcha: Contributte\Forms\Captcha\Seznam\DI\SeznamCaptchaExtension
+```
+
+#### Seznam Captcha Configuration
+
+```yaml
+seznamCaptcha:
+    auto: true # Automatically bind addSeznamCaptcha to forms
+```
+
+#### Seznam Captcha Form Usage
+
+```php
+use Nette\Application\UI\Form;
+
+protected function createComponentForm()
+{
+    $form = new Form();
+
+    $form->addSeznamCaptcha('captcha')
+        ->getCode()
+        ->setRequired('Please enter the captcha code');
+
+    $form->addSubmit('send');
+
+    $form->onValidate[] = function (Form $form) {
+        if ($form['captcha']->verify() !== TRUE) {
+            $form->addError('Are you robot?');
+        }
+    };
+
+    $form->onSuccess[] = function (Form $form) {
+        dump($form['captcha']);
+    };
+
+    return $form;
+}
+```
+
+#### Seznam Captcha Example
+
+![captcha](seznam-captcha.png)
