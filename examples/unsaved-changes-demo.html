@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsaved Changes Warning - Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .demo-section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status-indicator {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .status-clean {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-dirty {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Unsaved Form Changes Warning - PoC Demo</h1>
+
+        <div class="alert alert-info">
+            <h5>How to test:</h5>
+            <ol>
+                <li>Fill out any form below</li>
+                <li>Try to close the browser tab or navigate away</li>
+                <li>You'll see a browser confirmation dialog warning about unsaved changes</li>
+                <li>Submit the form to clear the warning</li>
+            </ol>
+        </div>
+
+        <!-- Example 1: Auto-initialization with data attribute -->
+        <div class="demo-section">
+            <h2>Example 1: Auto-initialization (Declarative)</h2>
+            <p>This form uses <code>data-unsaved-warning</code> attribute for automatic initialization.</p>
+
+            <form data-unsaved-warning="You have unsaved changes. Are you sure you want to leave?" method="post" action="#">
+                <div class="mb-3">
+                    <label for="name1" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name1" name="name" placeholder="Enter your name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email1" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email1" name="email" placeholder="Enter your email">
+                </div>
+
+                <div class="mb-3">
+                    <label for="message1" class="form-label">Message</label>
+                    <textarea class="form-control" id="message1" name="message" rows="3" placeholder="Your message"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="country1" class="form-label">Country</label>
+                    <select class="form-select" id="country1" name="country">
+                        <option value="">Select a country</option>
+                        <option value="us">United States</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="ca">Canada</option>
+                        <option value="au">Australia</option>
+                    </select>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="newsletter1" name="newsletter">
+                    <label class="form-check-label" for="newsletter1">Subscribe to newsletter</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='#'">Cancel (triggers warning)</button>
+            </form>
+        </div>
+
+        <!-- Example 2: Manual initialization with JavaScript -->
+        <div class="demo-section">
+            <h2>Example 2: Manual Initialization (Programmatic)</h2>
+            <p>This form is initialized programmatically with custom options and status indicator.</p>
+
+            <div id="status2" class="status-indicator status-clean">
+                Status: No unsaved changes
+            </div>
+
+            <form id="manualForm" method="post" action="#">
+                <div class="mb-3">
+                    <label for="name2" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name2" name="name" placeholder="Enter your name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone2" class="form-label">Phone</label>
+                    <input type="tel" class="form-control" id="phone2" name="phone" placeholder="(123) 456-7890">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Preferred Contact Method</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contact" id="contactEmail" value="email" checked>
+                        <label class="form-check-label" for="contactEmail">Email</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contact" id="contactPhone" value="phone">
+                        <label class="form-check-label" for="contactPhone">Phone</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="comments2" class="form-label">Comments</label>
+                    <textarea class="form-control" id="comments2" name="comments" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-warning" onclick="tracker2.reset()">Reset Tracker</button>
+            </form>
+        </div>
+
+        <!-- Example 3: Debug mode -->
+        <div class="demo-section">
+            <h2>Example 3: Debug Mode</h2>
+            <p>This form has debug mode enabled. Open your browser console to see tracking events.</p>
+
+            <form data-unsaved-warning="true" data-unsaved-debug method="post" action="#">
+                <div class="mb-3">
+                    <label for="title3" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title3" name="title" placeholder="Post title">
+                </div>
+
+                <div class="mb-3">
+                    <label for="content3" class="form-label">Content</label>
+                    <textarea class="form-control" id="content3" name="content" rows="5" placeholder="Post content"></textarea>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="published3" name="published">
+                    <label class="form-check-label" for="published3">Publish immediately</label>
+                </div>
+
+                <button type="submit" class="btn btn-success">Publish</button>
+            </form>
+        </div>
+
+        <!-- Code Examples -->
+        <div class="demo-section">
+            <h2>Code Examples</h2>
+
+            <h4>HTML (Declarative):</h4>
+            <pre><code>&lt;form data-unsaved-warning="Your custom message here"&gt;
+    &lt;!-- form fields --&gt;
+&lt;/form&gt;</code></pre>
+
+            <h4>JavaScript (Programmatic):</h4>
+            <pre><code>var tracker = new UnsavedChangesTracker('#myForm', {
+    message: 'You have unsaved changes!',
+    debug: true
+});</code></pre>
+
+            <h4>PHP (with Nette Forms):</h4>
+            <pre><code>use Contributte\Forms\Controls\UnsavedChangesControl;
+
+$form = new Form();
+$form->addText('name', 'Name');
+$form->addEmail('email', 'Email');
+$form->addSubmit('submit', 'Submit');
+
+// Enable unsaved changes warning
+UnsavedChangesControl::enable($form, 'You have unsaved changes!');
+
+echo $form;</code></pre>
+        </div>
+    </div>
+
+    <!-- Include the unsaved changes tracker script -->
+    <script src="../assets/unsaved-changes.js"></script>
+
+    <!-- Manual initialization for Example 2 -->
+    <script>
+        // Initialize tracker for manual form with custom options
+        var tracker2 = new UnsavedChangesTracker('#manualForm', {
+            message: 'You have unsaved changes in this form!',
+            debug: true
+        });
+
+        // Update status indicator
+        setInterval(function() {
+            var status = document.getElementById('status2');
+            if (tracker2.isDirty) {
+                status.className = 'status-indicator status-dirty';
+                status.textContent = 'Status: Unsaved changes detected!';
+            } else {
+                status.className = 'status-indicator status-clean';
+                status.textContent = 'Status: No unsaved changes';
+            }
+        }, 500);
+    </script>
+</body>
+</html>
