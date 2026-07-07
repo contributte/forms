@@ -18,7 +18,7 @@
 Website 🚀 <a href="https://contributte.org">contributte.org</a> | Contact 👨🏻‍💻 <a href="https://f3l1x.io">f3l1x.io</a> | Twitter 🐦 <a href="https://twitter.com/contributte">@contributte</a>
 </p>
 
-Extra contrib to nette/forms.
+Extra controls, factories and captcha integrations for `nette/forms`.
 
 ## Versions
 
@@ -281,7 +281,7 @@ $control = new DateTimeInput($label, "d.m.Y H:i");
 * DateInput `<input type="text" data-format="Y-m-d"/>`
 * TimeInput `<input type="text" data-format="H:i"/>`
 
-You can set multiple accepted formats. First of then is considered as desired format and will be passed to rendered HTML.
+You can set multiple accepted formats. The first one is considered the desired format and will be passed to rendered HTML.
 
 ```php
 $control = new DateTimeInput($label, ["d.m.Y H:i", "Y-m-d H:i"]);
@@ -291,7 +291,7 @@ $control = new DateTimeInput($label, ["d.m.Y H:i", "Y-m-d H:i"]);
 
 All inputs return value as \DateTimeImmutable by default, but you can change value type.
 
-You can set vale type to any class implementing \DateTimeInterface.
+You can set the value type to any class implementing \DateTimeInterface.
 
 ```php
 $control->setValueType(\DateTime::class);
@@ -317,7 +317,7 @@ $control->setValueAs(\DateTime::class);
 
 #### Default value
 
-Default value can se set as:
+Default value can be set as:
 
 * \DateTimeInterface object
 * string with any custom format
@@ -326,17 +326,17 @@ Default value can se set as:
 
 #### Data attributes - for JavaScript picker
 
-If you use custom format text input then all relevant settings are aautomatically passed to rendered HTML in form of data attributes. So oyu can use then to initialize your favourite JavaScript datetime picker.
+If you use a custom format text input, all relevant settings are automatically passed to rendered HTML as data attributes. You can use them to initialize your favorite JavaScript datetime picker.
 
 * `data-format="..."` - desired value format
 * `data-value="..."` - value in standard format
 * `data-min="..."` - minimal value in standard format
 * `data-max="..."` - maximal value in standard format
-* `data-settings="..."` - additional settings in JSON (see bellow)
+* `data-settings="..."` - additional settings in JSON (see below)
 
-Note: Standardized formats are same as for related HTML5 native inputs - "Y-m-d H:i", "Y-m-d" or "H:i".
+Note: Standardized formats are the same as for related HTML5 native inputs - "Y-m-d H:i", "Y-m-d" or "H:i".
 
-To set additonal settings use:
+To set additional settings use:
 ```php
 $control->setOption('settings', ['option1' => 'val1', 'option2' => 2]);
 ```
@@ -354,9 +354,9 @@ $control->addRule(Form::RANGE, 'Range %d - %d', [
 
 #### DateTimeInput - input timezone
 
-DateTime input does not do any timezone conversions by default.
+DateTimeInput does not do any timezone conversions by default.
 
-Values are transformed to/from input format as they are and timezone information is ignored or expected to be same as server timezone. This is all right as long as you server time zone, client timezone and all values timezone matches.
+Values are transformed to/from input format as they are and timezone information is ignored or expected to be the same as the server timezone. This is all right as long as your server timezone, client timezone and all value timezones match.
 
 You can enable timezone conversions for given input by setting optional parameter `$inputTimezone`.
 
@@ -364,18 +364,18 @@ You can enable timezone conversions for given input by setting optional paramete
 $control = new DateTimeInput($label, "d.m.Y H:i", new DateTimeZone("America/New_York"));
 ```
 
-Then all values (`setValue`, `setDefaultValue`, `addRule`) are converted to selected timezone before transforming it to given format. And returned value from control have given input timezone set.
+Then all values (`setValue`, `setDefaultValue`, `addRule`) are converted to the selected timezone before transforming them to the given format. The returned value from the control has the given input timezone set.
 
 You can also manually get value as in different Time zone using `getValueInTz` or `getValueInTzAs`. If timezone argument is null then default server timezone is used.
 ```php
 $control->setValue(); // value in input timezone
 $control->setValueInTz(); // value in server default timezone
-$control->setValueInTz(new DateTimeZone('Americe/New_York')); // value in given timezone
+$control->setValueInTz(new DateTimeZone('America/New_York')); // value in given timezone
 ```
 ```php
 $control->setValueAs(DateTime::class); // value in input timezone as \DateTime
 $control->setValueInTzAs(DateTime::class); // value in server default timezone as \DateTime
-$control->setValueInTzAs(DateTime::class, new DateTimeZone('Americe/New_York')); // value in given timezone as \DateTime
+$control->setValueInTzAs(DateTime::class, new DateTimeZone('America/New_York')); // value in given timezone as \DateTime
 ```
 
 ## Captcha
@@ -388,7 +388,7 @@ Question-based captcha for Nette Framework / Forms.
 
 Register extension
 
-```yaml
+```neon
 extensions:
     wordcha: Contributte\Forms\Captcha\Wordcha\DI\WordchaExtension
 ```
@@ -399,14 +399,14 @@ At the beginning you should pick the right datasource.
 
 ##### Numeric datasource
 
-```yaml
+```neon
 wordcha:
     datasource: numeric
 ```
 
 ##### Question datasource
 
-```yaml
+```neon
 wordcha:
     datasource: questions
     questions:
@@ -455,14 +455,14 @@ Image-based captcha using [Seznam.cz Captcha](https://captcha.seznam.cz) service
 
 Register extension
 
-```yaml
+```neon
 extensions:
     seznamCaptcha: Contributte\Forms\Captcha\Seznam\DI\SeznamCaptchaExtension
 ```
 
 #### Seznam Captcha Configuration
 
-```yaml
+```neon
 seznamCaptcha:
     auto: true # Automatically bind addSeznamCaptcha to forms
 ```
