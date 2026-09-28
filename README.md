@@ -1,8 +1,8 @@
 ![](https://heatbadger.now.sh/github/readme/contributte/forms/)
 
 <p align=center>
-  <a href="https://github.com/contributte/forms/actions"><img src="https://badgen.net/github/checks/contributte/forms/master?forms=300"></a>
-  <a href="https://coveralls.io/r/contributte/forms"><img src="https://badgen.net/coveralls/c/github/contributte/forms?forms=300"></a>
+  <a href="https://github.com/contributte/forms/actions"><img src="https://badgen.net/github/checks/contributte/forms/master?cache=300"></a>
+  <a href="https://codecov.io/gh/contributte/forms"><img src="https://badgen.net/codecov/c/github/contributte/forms"></a>
   <a href="https://packagist.org/packages/contributte/forms"><img src="https://badgen.net/packagist/dm/contributte/forms"></a>
   <a href="https://packagist.org/packages/contributte/forms"><img src="https://badgen.net/packagist/v/contributte/forms"></a>
 </p>
@@ -18,35 +18,56 @@
 Website 🚀 <a href="https://contributte.org">contributte.org</a> | Contact 👨🏻‍💻 <a href="https://f3l1x.io">f3l1x.io</a> | Twitter 🐦 <a href="https://twitter.com/contributte">@contributte</a>
 </p>
 
+Contributte Forms adds date and time inputs, Bootstrap 3, 4 and 5 renderers, two captchas and form factory DI
+extensions to [Nette Forms](https://doc.nette.org/en/forms). Each part works on its own, so you can use a renderer
+without the captchas or the date inputs without a DI container.
+
 ## Usage
 
-To install latest version of `contributte/forms` use [Composer](https://getcomposer.org).
+To install the latest version of `contributte/forms`, use [Composer](https://getcomposer.org):
 
 ```bash
 composer require contributte/forms
 ```
 
+Requires PHP 8.2 or later and Nette Forms 3.2.
+
+Add a date input and render the form with Bootstrap 5 classes:
+
+```php
+use Contributte\Forms\Controls\DateTime\DateInput;
+use Contributte\Forms\Rendering\Bootstrap5VerticalRenderer;
+use Nette\Forms\Form;
+
+$form = new Form();
+$form['birthday'] = new DateInput('Birthday'); // <input type="date">, value is DateTimeImmutable
+$form->addSubmit('send', 'Send');
+$form->setRenderer(new Bootstrap5VerticalRenderer());
+```
+
 ## Documentation
 
-For details on how to use this package, check out our [documentation](.docs).
+For details on how to use this package, check out the [documentation](.docs).
 
 ## Versions
 
-| State       | Version | Branch   | Nette | PHP     |
-|-------------|---------|----------|-------|---------|
-| dev         | `^0.6`  | `master` | 3.0+  | `>=7.2` |
-| stable      | `^0.5`  | `master` | 3.0+  | `>=7.2` |
-| stable      | `^0.3`  | `master` | 2.4   | `>=7.1` |
+| State       | Version | Branch   | Nette  | PHP     |
+|-------------|---------|----------|--------|---------|
+| dev         | `^0.7`  | `master` | `3.2+` | `>=8.2` |
+| stable      | `^0.5`  | `master` | `3.0+` | `>=7.2` |
+| stable      | `^0.3`  | `master` | `2.4`  | `>=7.1` |
 
 ## Development
 
-See [how to contribute](https://contributte.org) to this package. This package is currently maintained by these authors.
+See [how to contribute](https://contributte.org/contributing.html) to this package.
+
+This package is currently maintained by these authors.
 
 <a href="https://github.com/f3l1x">
-    <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
+  <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
 </a>
 
 -----
 
-Consider to [support](https://contributte.org/partners) **contributte** development team.
-Also thank you for using this package.
+Consider [supporting](https://contributte.org/partners.html) the **contributte** development team.
+Thank you for using this package.
