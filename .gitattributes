@@ -8,3 +8,6 @@ README.md export-ignore
 phpstan.neon export-ignore
 ruleset.xml export-ignore
 tests export-ignore
+AGENTS.md export-ignore
+DESIGN.md export-ignore
+fxnorm.yml export-ignore
